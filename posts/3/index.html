@@ -1711,7 +1711,7 @@ Subversion等集中式版本控制软件不同，Git不需要服务器端软件�
       
   <header>
     
-      <h1 class="entry-title"><a href="/tuan-dui-xiao-huo-ban-shang-di-yi-cai-jing/">团队小伙伴上第一财经</a></h1>
+      <h1 class="entry-title"><a href="/http-cache/">HTTP Cache</a></h1>
     
     
       <p class="meta">
@@ -1720,16 +1720,376 @@ Subversion等集中式版本控制软件不同，Git不需要服务器端软件�
 
 
 
-<time class='entry-date' datetime='2015-03-27T11:43:57+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:43 am</span></time>
+<time class='entry-date' datetime='2015-03-17T21:01:48+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:01 pm</span></time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><video  preload='metadata' controls ><source src='http://v2.yicai.com/newvideo/video/201503/26/55141f68-15af-04e3-443c-b0c7c362/transcode_50736195-6c28-756d-ee5f-0d6013fc.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></video></p>
+  <div class="entry-content"><p>使用缓存的优点：</p>
 
-<p>ps：貌似没看到我</p>
+<ul>
+<li>减少了冗余的数据传输</li>
+<li>缓解了网络瓶颈</li>
+<li>降低了对原始服务器的要求</li>
+<li>降低了距离时延</li>
+</ul>
+
+
+<h3>再验证</h3>
+
+<p>HTTP为我们提供了几个用来对已缓存对象进行再验证工具，但最常用的是
+<code>If-Modified-Since</code>首部。</p>
+
+<ul>
+<li>再验证命中，返回<code>304 Not Modified</code>响应。</li>
+<li>再验证未命中，服务器返回普通的，带有完整内容的<code>200 OK</code>响应。</li>
+<li>对象被删除，返回<code>404 Not Found</code>响应。</li>
+</ul>
+
+
+<h3>缓存的处理步骤</h3>
+
+<ol>
+<li>接收——缓存从网络中读取抵达的请求报文。</li>
+<li>解析——缓存对报文进行解析，提取出URL和各种首部。</li>
+<li>查询——缓存查看是否有本地副本可用，如果没有，就获取一份副本（并将其保存在本
+地）。</li>
+<li>新鲜度检测——缓存查看已缓存的副本是否足够新鲜，如果不是，就询问服务器是否有
+任何更新。</li>
+<li>创建响应——缓存会用辛的首部和已缓存的主体来构建一条响应报文。</li>
+<li>发送——缓存通过网络将响应发送回给客户端。</li>
+<li>日志——缓存可选地创建一个日志文件条目来描述这个事务。</li>
+</ol>
+
+
+<h3>保持副本的新鲜度</h3>
+
+<ul>
+<li><strong>文档过期</strong>。通过特殊的HTTP <code>Cache-Control</code>首部和<code>Expires</code>首部。</li>
+<li><strong>服务器再验证</strong>。HTTP定义了五个条件请求首部。对缓存再验证来说最有用的两个
+首部是<code>If-Modified-Since</code>和<code>If-None-Match</code>。</li>
+</ul>
+
+
+<h3>控制缓存的能力</h3>
+
+<p>服务器可以通过HTTP定义的几种方式来指定在文档过期之前可以将其缓存多长时间。</p>
+
+<ul>
+<li><code>Cache-Control: no-store</code></li>
+<li><code>Cache-Control: no-cache</code></li>
+<li><code>Cache-Control: must-revalidate</code></li>
+<li><code>Cache-Control: max-age</code></li>
+<li><code>Expires</code></li>
+<li>不附加过期信息，让缓存确定自己的过期日期。</li>
+</ul>
+
+
+<h4>no-store和no-cache响应首部</h4>
+
+<p>可以防止缓存提供未经证实的已缓存对象：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="n">Pragma:</span> <span class="nb">no</span><span class="o">-</span><span class="n">cache</span>
+</span><span class='line'><span class="n">Cache</span><span class="o">-</span><span class="n">Control:</span> <span class="nb">no</span><span class="o">-</span><span class="n">store</span>
+</span><span class='line'><span class="n">Cache</span><span class="o">-</span><span class="n">Control:</span> <span class="nb">no</span><span class="o">-</span><span class="n">cache</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>max-age响应首部</h4>
+
+<p>表示从服务器将文档传输来之时起，可以认为此文档处于新鲜期的秒数。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="n">Cache</span><span class="o">-</span><span class="n">Control:</span> <span class="n">max</span><span class="o">-</span><span class="n">age</span><span class="o">=</span><span class="mi">3600</span><span class="p">;</span>
+</span><span class='line'><span class="n">Cache</span><span class="o">-</span><span class="n">Control:</span> <span class="n">s</span><span class="o">-</span><span class="n">maxage</span><span class="o">=</span><span class="mi">3600</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>将最大使用期限设置为0则不进行缓存。</p>
+
+<h4>Expires响应首部</h4>
+
+<p>不推荐使用。</p>
+
+<h4>must-revalidate响应首部</h4>
+
+<p>在事先没有跟原始服务器进行再验证的情况下，不能提供这个对象陈旧的副本。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="n">Cache</span><span class="o">-</span><span class="n">Control:</span> <span class="n">must</span><span class="o">-</span><span class="n">revalidate</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>试探性过期</h4>
+
+<p>如果响应中没有<code>Cache-Control: max-age</code>首部，也没有<code>Exprires</code>首部，缓存可以计
+算出一个试探性最大使用期。可以使用任意算法，如果得到的最大使用期大于24小时,
+就应该向响应首部添加一个Heuristic Expiration Warning首部。</p>
+
+<p>LM-Factor算法是一种常用的试探性过期算法，如果文档中包含了最后修改日期，就可以
+使用这种算法。算法逻辑如下：</p>
+
+<ul>
+<li><p>如果已缓存的文档最后一次修改发生在很久以前，它可能会是一份稳定的文档，不太
+会突然发生变化，因此将其继续保存在缓存中会比较安全。</p></li>
+<li><p>如果已缓存的文档最近被修改过，就说明它很可能会频繁地发生变化，因此在与服务
+器进行再验证之前，只应该将其缓存很短的一段时间。</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nv">$time_since_modify</span>      <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nv">$server_Date</span> <span class="o">-</span> <span class="nv">$server_Last_Modified</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$server_freshness_limit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nv">$time_since_modify</span> <span class="o">*</span> <span class="nv">$lm_factor</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>设置缓存控制</h3>
+
+<p>Apache Web服务器提供了几种设置HTTP缓存控制首部的机制。其中很多机制在默认情况
+下都没有启动。</p>
+
+<ul>
+<li>mod_headers</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;Files</span> <span class="s">*.html</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">Header</span> set Cache-control no-cache
+</span><span class='line'><span class="nt">&lt;/Files&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>mod_expires</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="n">ExpiresDefault</span> <span class="n">A3600</span>
+</span><span class='line'><span class="n">ExpiresDefault</span> <span class="n">M86400</span>
+</span><span class='line'><span class="n">ExpiresDefault</span> <span class="s">&quot;access plus 1 week&quot;</span>
+</span><span class='line'><span class="n">ExpiresByType</span> <span class="n">text</span><span class="o">/</span><span class="n">html</span> <span class="s">&quot;modification plus 2 days 6 hours 12 minutes&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>mod_cern_meta</li>
+</ul>
+
+
+<h4>通过HTTP-EQUIV控制HTML缓存</h4>
+
+<p>为了让作者在无需与Web服务器的配置文件进行交互的情况下，能够更容易地为所提供的
+HTML文档分配HTTP首部信息，HTML2.0定义了<code>&lt;META HTTP-EQUIV&gt;</code>标签。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;html&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;head&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;title&gt;</span>My document<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;cache-control&quot;</span> <span class="na">content=</span><span class="s">&quot;no-cache&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/head&gt;</span>
+</span><span class='line'><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>详细算法</h3>
+
+<p>对HTTP的新鲜度计算算法进行详细的讨论，并对此算法动机进行解释。</p>
+
+<h4>使用期和新鲜生存期</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nv">$is_fresh_enough</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$age</span> <span class="o">&lt;</span> <span class="nv">$freshness_lifetime</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>使用期的计算</h4>
+
+<p>响应的使用期就是服务器发布响应（活服务器对其进行了再验证）之后经过的总时间。</p>
+
+<figure class='code'><figcaption><span>使用期计算的伪代码</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="c1"># 使用期计算的伪代码</span>
+</span><span class='line'><span class="nv">$apparent_age</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nv">$time_got_response</span> <span class="o">-</span> <span class="nv">$Date_header_value</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$corrected_apparent_age</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="nv">$apparent_age</span><span class="p">,</span> <span class="nv">$Age_header_value</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$response_delay_estimate</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$time_got_response</span> <span class="o">-</span> <span class="nv">$time_issued_request</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$age_when_document_arrived_at_our_cache</span> <span class="o">=</span>
+</span><span class='line'>    <span class="nv">$correncted_apparent_age</span> <span class="o">+</span> <span class="nv">$response_delay_estimeate</span><span class="p">;</span>
+</span><span class='line'><span class="nv">$how_long_copy_has_been_in_our_cache</span> <span class="o">=</span>
+</span><span class='line'>    <span class="nv">$current_time</span> <span class="o">-</span> <span class="nv">$time_got_response</span><span class="p">;</span>
+</span><span class='line'><span class="nv">$age</span> <span class="o">=</span> <span class="nv">$age_when_document_arrived_at_our_cache</span> <span class="o">+</span>
+</span><span class='line'>    <span class="nv">$how_long_copy_has_been_in_our_cache</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>完整的服务器新鲜度算法</h4>
+
+<figure class='code'><figcaption><span>服务器新鲜度限制计算算法</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="c1">## 服务器新鲜度限制的计算</span>
+</span><span class='line'><span class="k">sub </span><span class="nf">server_freshness_limit</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nb">local</span><span class="p">(</span><span class="nv">$heuristic</span><span class="p">,</span> <span class="nv">$server_freshness_limit</span><span class="p">,</span> <span class="nv">$time_since_last_modify</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$heuristic</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nv">$Max_Age_value_set</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="nv">$server_freshness_limit</span> <span class="o">=</span> <span class="nv">$Max_Age_value</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">elseif</span> <span class="p">(</span><span class="nv">$Expires_value_set</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="nv">$server_freshness_limit</span> <span class="o">=</span> <span class="nv">$Expires_value</span> <span class="o">-</span> <span class="nv">$Date_value</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">elseif</span> <span class="p">(</span><span class="nv">$Last_Modified_value_set</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="nv">$time_since_last_modify</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nv">$Date_value</span> <span class="o">-</span> <span class="nv">$Last_Modified_value</span><span class="p">);</span>
+</span><span class='line'>    <span class="nv">$server_freshness_limit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nv">$time_since_last_modify</span> <span class="o">*</span> <span class="n">lm_factor</span><span class="p">);</span>
+</span><span class='line'>    <span class="nv">$heuristic</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nv">$server_freshness_limit</span> <span class="o">=</span> <span class="nv">$default_cache_min_lifetime</span><span class="p">;</span>
+</span><span class='line'>    <span class="nv">$heuristic</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nv">$heuristic</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nv">$server_freshness_limit</span> <span class="o">&gt;</span> <span class="nv">$default_cache_max_lifetime</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="nv">$server_fresh_limit</span> <span class="o">=</span> <span class="nv">$default_cache_max_lifetime</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nv">$server_freshness_limit</span> <span class="o">&lt;</span> <span class="nv">$default_cache_min_lifetime</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="nv">$server_fresh_limit</span> <span class="o">=</span> <span class="nv">$default_cache_min_lifetime</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="p">(</span><span class="nv">$server_freshness_limit</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">## 客户端新鲜度限制的计算</span>
+</span><span class='line'><span class="k">sub </span><span class="nf">client_modified_freshness_limit</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nv">$age_limit</span> <span class="o">=</span> <span class="n">server_freshness_limit</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nv">$Max_Stale_value_set</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nv">$Max_Stale_value</span> <span class="o">==</span> <span class="nv">$INT_MAX</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="nv">$age_limit</span> <span class="o">=</span> <span class="nv">$INT_MAX</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="nv">$age_limit</span> <span class="o">=</span> <span class="n">server_freshness_limit</span><span class="p">()</span> <span class="o">+</span> <span class="nv">$Max_Stale_value</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nv">$Min_Fresh_value_set</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="nv">$age_limit</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="nv">$age_limit</span><span class="p">,</span> <span class="n">server_freshness_limit</span><span class="p">()</span> <span class="o">-</span>
+</span><span class='line'>        <span class="nv">$Min_Fresh_value_set</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nv">$Max_Age_value_set</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="nv">$age_limit</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="nv">$age_limit</span><span class="p">,</span> <span class="nv">$Max_Age_value</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
   
   
@@ -1754,11 +2114,11 @@ Subversion等集中式版本控制软件不同，Git不需要服务器端软件�
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/shen-me-shi-xian-cheng/">什么是线程</a>
+        <a href="/vagrant-install-linux/">Vagrant Install Linux</a>
       </li>
     
       <li class="post">
-        <a href="/di-yi-ci-yu-arduino-jiao-hu/">第一次与 Arduino 交互</a>
+        <a href="/shen-me-shi-xian-cheng/">什么是线程</a>
       </li>
     
       <li class="post">
@@ -1786,11 +2146,11 @@ Subversion等集中式版本控制软件不同，Git不需要服务器端软件�
       </li>
     
       <li class="post">
-        <a href="/tuan-dui-xiao-huo-ban-shang-di-yi-cai-jing/">团队小伙伴上第一财经</a>
+        <a href="/http-cache/">HTTP Cache</a>
       </li>
     
       <li class="post">
-        <a href="/she-and-me/">She and Me</a>
+        <a href="/cheng-du-jin-fu-ren-cong-ling-bu-shu-ji-lu/">成都金夫人从零部署记录</a>
       </li>
     
   </ul>
@@ -1798,8 +2158,7 @@ Subversion等集中式版本控制软件不同，Git不需要服务器端软件�
 <section>
   <h1>Categories</h1>
   <ul id="categories">
-    <li class='category'><a href='/blog/categories/ji-zhu/'>技术 (15)</a></li>
-<li class='category'><a href='/blog/categories/sheng-huo/'>生活 (4)</a></li>
+    <li class='category'><a href='/blog/categories/ji-zhu/'>技术 (14)</a></li>
 
   </ul>
 </section>

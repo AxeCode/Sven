@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://axecode.ga/shen-me-shi-xian-cheng/</loc>
-    <lastmod>2015-06-01T21:44:33+08:00</lastmod>
+    <loc>http://axecode.ga/vagrant-install-linux/</loc>
+    <lastmod>2015-07-18T00:00:00+08:00</lastmod>
   </url>
   <url>
-    <loc>http://axecode.ga/di-yi-ci-yu-arduino-jiao-hu/</loc>
-    <lastmod>2015-05-31T21:01:21+08:00</lastmod>
+    <loc>http://axecode.ga/shen-me-shi-xian-cheng/</loc>
+    <lastmod>2015-06-01T21:44:33+08:00</lastmod>
   </url>
   <url>
     <loc>http://axecode.ga/arduino-xue-xi-bi-ji-led-shan-shuo-shi-yan-zhong-yin-han-de-jian-dan-yuan-li/</loc>
@@ -33,14 +33,6 @@
     <lastmod>2015-04-03T22:52:14+08:00</lastmod>
   </url>
   <url>
-    <loc>http://axecode.ga/tuan-dui-xiao-huo-ban-shang-di-yi-cai-jing/</loc>
-    <lastmod>2015-03-27T11:43:57+08:00</lastmod>
-  </url>
-  <url>
-    <loc>http://axecode.ga/she-and-me/</loc>
-    <lastmod>2015-03-26T22:46:13+08:00</lastmod>
-  </url>
-  <url>
     <loc>http://axecode.ga/http-cache/</loc>
     <lastmod>2015-03-17T21:01:48+08:00</lastmod>
   </url>
@@ -53,16 +45,8 @@
     <lastmod>2014-11-06T10:05:34+08:00</lastmod>
   </url>
   <url>
-    <loc>http://axecode.ga/jun-zi-gu-you-qiong-hu/</loc>
-    <lastmod>2014-07-27T08:56:43+08:00</lastmod>
-  </url>
-  <url>
     <loc>http://axecode.ga/sou-suo-yin-qing-you-hua-yao-dian/</loc>
     <lastmod>2014-07-27T08:50:09+08:00</lastmod>
-  </url>
-  <url>
-    <loc>http://axecode.ga/hai-bian-de-qia-fu-qia-he-jiao-wu-ya-de-shao-nian/</loc>
-    <lastmod>2014-06-22T09:02:39+08:00</lastmod>
   </url>
   <url>
     <loc>http://axecode.ga/chong-xin-ren-shi-java,fa-xian-ni-de-xi-jie/</loc>
@@ -92,9 +76,6 @@
     <loc>http://axecode.ga/blog/categories/ji-zhu/</loc>
   </url>
   <url>
-    <loc>http://axecode.ga/blog/categories/sheng-huo/</loc>
-  </url>
-  <url>
     <loc>http://axecode.ga/posts/2/</loc>
   </url>
   <url>
@@ -107,13 +88,7 @@
     <loc>http://axecode.ga/posts/5/</loc>
   </url>
   <url>
-    <loc>http://axecode.ga/posts/6/</loc>
-  </url>
-  <url>
-    <loc>http://axecode.ga/posts/7/</loc>
-  </url>
-  <url>
     <loc>http://axecode.ga/google95b207230597ea5d.html</loc>
-    <lastmod>2015-07-18T11:46:10+08:00</lastmod>
+    <lastmod>2015-07-18T12:02:17+08:00</lastmod>
   </url>
 </urlset>

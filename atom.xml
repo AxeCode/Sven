@@ -4,7 +4,7 @@
   <title><![CDATA[Sven]]></title>
   <link href="http://axecode.ga/atom.xml" rel="self"/>
   <link href="http://axecode.ga/"/>
-  <updated>2015-07-18T11:50:36+08:00</updated>
+  <updated>2015-07-18T12:07:52+08:00</updated>
   <id>http://axecode.ga/</id>
   <author>
     <name><![CDATA[Axecode]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Vagrant Install Linux]]></title>
+    <link href="http://axecode.ga/vagrant-install-linux/"/>
+    <updated>2015-07-18T00:00:00+08:00</updated>
+    <id>http://axecode.ga/vagrant-install-linux</id>
+    <content type="html"><![CDATA[<h3>使用VirtualBox和Vagrant搭建Linux开发环境</h3>
+
+<p>1.下载并安装vagrant和virtualBox.(VB在前，vagrant在后，以防止vagrant检测不到VB)。</p>
+
+<p>2.启动VirtualBox修改虚拟机默认保存路径，改为其他盘，以节省C盘空间。</p>
+
+<p>3.在任意目录新建文件夹，假设为<code>d:/vm</code>，启动windows命令行，cd至该目录下：此处以ubuntu/trusty64 box为例。更多系统可以搜索 <a href="https://vagrantcloud.com">https://vagrantcloud.com</a>。trusty64为ubuntu14.04 64位服务器版，比较纯净。命令行中输入    <code>vagrant init ubuntu/trusty64</code></p>
+
+<p>4.按照提示输入<code>vagrant up</code>。该命令执行后vagrant会去自动下载指定的系统镜像，并且帮你在VirtualBox中建立一个新的虚拟机。命令执行成功虚拟机将会启动。</p>
+
+<p>5.<code>d:/vm</code>下Vagrantfile即为当前box的配置文件。编辑“Vagrantfile”文件，找到<code>config.vm.network "private_network", ip: "192.168.33.10"”</code>所在的行，将其前面的“#”号去掉。重新加载这个box，使得配置生效。输入命令： <code>vagrant reload</code>。执行完以上操作后我们就可以通过vagrant配置文件中使指定的ip地址来访问到该虚拟机了。</p>
+
+<p>6.接着我们要通过ssh的方式来链接到我们刚刚建立好的虚拟机上。 输入命令：<code>vagrant ssh</code>。vagrant会提示连接地址端口用户名和密钥位置。这里推荐使用 xshell 这个ssh客户端,假设已经装好,运行xshell,新建会话，输入host和port确定。第一次登陆须输入用户名，此处为vagrant,接着用户验证，选择“Public Key”，然后点击浏览按钮选择“文件”，然后根据vagrant之前给你的信息找到key文件。点击确定后即可成功连接到你的虚拟机。</p>
+
+<p>7.请务必注意，给您的电脑关机之前，一定要用windows的命令行执行<code>vagrant halt</code>来关闭你的虚拟机，否则很有可能要重新装过。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[什么是线程]]></title>
@@ -50,266 +73,6 @@
 <li>用于每个线程局部变量的静态存储空间。</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[第一次与 Arduino 交互]]></title>
-    <link href="http://axecode.ga/di-yi-ci-yu-arduino-jiao-hu/"/>
-    <updated>2015-05-31T21:01:21+08:00</updated>
-    <id>http://axecode.ga/di-yi-ci-yu-arduino-jiao-hu</id>
-    <content type="html"><![CDATA[<p>这是一个比较简单的实验，不过好歹也是让 Arduino 接受外界电子元件的输入值了。这是
-套互动交通灯的实验，Arduino 等待行人按下按钮，这样行车灯会变红，行人灯会变绿。</p>
-
-<h2>需要的电子元件</h2>
-
-<ul>
-<li>LED 灯（2红，2绿，1黄）</li>
-<li>100Ω 电阻</li>
-<li>10KΩ 高阻值电阻（用于下拉电阻）</li>
-<li>按钮（有时供应商称之为微动开关）</li>
-<li>面包板与导线</li>
-</ul>
-
-
-<h2>代码回顾</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="n">carRed</span>    <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
-</span><span class='line'><span class="kt">int</span> <span class="n">carGreen</span>  <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-</span><span class='line'><span class="kt">int</span> <span class="n">carYellow</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="n">pedRed</span>    <span class="o">=</span>  <span class="mi">8</span><span class="p">;</span>
-</span><span class='line'><span class="kt">int</span> <span class="n">pedGreen</span>  <span class="o">=</span>  <span class="mi">9</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="n">buttonPin</span> <span class="o">=</span>  <span class="mi">2</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="n">crossTime</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">;</span>
-</span><span class='line'><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">changeTime</span><span class="p">;</span> <span class="c1">// Time of press button</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">pinMode</span><span class="p">(</span><span class="n">carRed</span><span class="p">,</span>    <span class="n">OUTPUT</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">pinMode</span><span class="p">(</span><span class="n">carGreen</span><span class="p">,</span>  <span class="n">OUTPUT</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">pinMode</span><span class="p">(</span><span class="n">carYellow</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">pinMode</span><span class="p">(</span><span class="n">pedRed</span><span class="p">,</span>    <span class="n">OUTPUT</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">pinMode</span><span class="p">(</span><span class="n">pedGreen</span><span class="p">,</span>  <span class="n">OUTPUT</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">pinMode</span><span class="p">(</span><span class="n">buttonPin</span><span class="p">,</span> <span class="n">INPUT</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">carGreen</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">pedRed</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">state</span> <span class="o">=</span> <span class="n">digitalRead</span><span class="p">(</span><span class="n">buttonPin</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="n">HIGH</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">millis</span><span class="p">()</span> <span class="o">-</span> <span class="n">changeTime</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5000</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">changeLights</span><span class="p">();</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">changeLights</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">carGreen</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">carYellow</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">carYellow</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">carRed</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">pedRed</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">pedGreen</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">delay</span><span class="p">(</span><span class="n">crossTime</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">pedGreen</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">delay</span><span class="p">(</span><span class="mi">250</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">pedGreen</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">delay</span><span class="p">(</span><span class="mi">250</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">pedRed</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">carYellow</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">carRed</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">carGreen</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">carYellow</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">changeTime</span> <span class="o">=</span> <span class="n">millis</span><span class="p">();</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这次使用了一个能存储大数字的数据类型</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">chageTime</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>由于 Arduino 使用的 Atemga 32 只有很小的内存，所以合理分配与使用内存在这之上就显
-得非常重要。</p>
-
-<p>接下来就是让 Arduino 读取按钮输出值了，</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">pinMode</span><span class="p">(</span><span class="n">buttonPin</span><span class="p">,</span> <span class="n">INPUT</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这句代码让 Arduino 将按钮所在的引脚设置为 <code>Input</code> 模式。在程序循环中，使用</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="n">state</span> <span class="o">=</span> <span class="n">digitalRead</span><span class="p">(</span><span class="n">buttonPin</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>来检查引脚的状态。</p>
-
-<h2>硬件回顾</h2>
-
-<p>本次与 Arduino 交互的元件是按钮，或者叫开关。按钮不是之间连接在电源线和引脚之间
-的，在按钮和地之间有一个电阻，这个电阻叫<strong>下拉电阻</strong>。对应的还有<strong>上拉电阻</strong>，它
-们对保证按钮正常工作是非常重要的。</p>
-
-<h4>逻辑状态</h4>
-
-<p><strong>逻辑电路</strong>是一种只有开、关两种状态的电路，用布尔数0和1表示。电路处于关状态时，
-输出端的电压接近0V。电路处于开状态时用高电平表示，输出端接近于电源供电电压。</p>
-
-<p>如果不能确定状态接近所需要的电压，这部分电路可以被认为是<strong>浮动的</strong>（既不是高电平
-，也不是低电平。），这种浮动也被称为电子噪声。电子噪声被随即的解释为0或者1。</p>
-
-<p>上拉电阻或下拉电阻可用来保证状态确定为高或低。</p>
-
-<h4>下拉电阻</h4>
-
-<p>如左图：</p>
-
-<p><img class="lazy no-shadow" data-original="/photos/dianzu.png" width="640" height="200" title="下拉电阻和上拉电阻" alt="下拉电阻和上拉电阻"></p>
-
-<p>如果按钮被按下，电流以电阻最小的路径在5V 端与输入引脚之间流过。 当按钮没有被按下
-时，输入引脚通过100KΩ 电阻接地。如果没有这个电阻，当按钮没有被按下时，这个引脚将
-不连接任何东西，因此它的电压是在 0V 和 5V 之间浮动。在这个电路中，当按钮没有被按
-下输入将总是接地的，或者是0V，当按钮被按下时它将指向5V端。</p>
-
-<h4>上拉电阻</h4>
-
-<p>如右图：</p>
-
-<p><img class="lazy no-shadow" data-original="/photos/dianzu.png" width="640" height="200" title="下拉电阻和上拉电阻" alt="下拉电阻和上拉电阻"></p>
-
-<p>交换下拉电阻和开关的位置，现在电阻变成了上拉电阻。当按钮没有被按下时，输入引脚通
-过上拉电阻接到5V端，所以引脚上总是高电平。当按钮被按下时，通过限流电阻的路径引脚
-接地，所以引脚被拉向地或者低电平状态。如果没有5V端和地之间的电阻，电路将被短路，
-这将损坏电路或电源。上拉电阻在数字电路中应用更广泛。</p>
-
-<p>上拉电阻在数字电路中经常用来保证输入保持高电平。</p>
-
-<h4>Arduino 内部的上拉电阻</h4>
-
-<p> Arduino 内部包含了上拉电阻。它连接在引脚上，阻值为20KΩ，使用时需要通过软件激活。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">pinMode</span><span class="p">(</span><span class="n">pin</span><span class="p">,</span> <span class="n">INPUT</span><span class="p">);</span>
-</span><span class='line'><span class="n">digitalWrite</span><span class="p">(</span><span class="n">pin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>同理，当一个输出脚为 HIGH 时，转换这个引脚到 INPUT 模式，那么内部上拉电阻将激活。</p>
-
-<h2>电位计与从模拟引脚读值</h2>
-
-<h4>电位计</h4>
-
-<p>电位计就是一个可调节电阻，调解范围从0到一个设定的值。电位计有三个引脚。若只连接
-两个引脚，电位计可变为一个可变电阻。通过连接三个引脚，并为其提供电压，它将称为
-一个分压器。</p>
-
-<p>电位计提供了一种在0和设定的最大值之间调整数值的方法。</p>
-
-<h4>模拟引脚读值</h4>
-
-<p>Arduino有6个模拟输入/输出引脚，每个引脚带有一个10位模/数转换器。这意味着模拟引脚
-能够读取0V 到 5V之间的电压，用0到1023之间的正数代表0V 到 5V之间的电压。每个分度
-表示 5V / 1024 电压，即每个分度是4.9mV。</p>
-
-<p>通过直接读取电位计引脚数值到ledDelay这个变量中：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">byte</span> <span class="n">potPin</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// 电位计连接到的模拟引脚</span>
-</span><span class='line'><span class="kt">int</span> <span class="n">ledDelay</span> <span class="o">=</span> <span class="n">analogRead</span><span class="p">(</span><span class="n">potPin</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>注意：模拟引脚不需要像数字引脚一样设置输入或输出模式。</p>
 ]]></content>
   </entry>
   
@@ -3144,27 +2907,6 @@ Subversion等集中式版本控制软件不同，Git不需要服务器端软件�
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[团队小伙伴上第一财经]]></title>
-    <link href="http://axecode.ga/tuan-dui-xiao-huo-ban-shang-di-yi-cai-jing/"/>
-    <updated>2015-03-27T11:43:57+08:00</updated>
-    <id>http://axecode.ga/tuan-dui-xiao-huo-ban-shang-di-yi-cai-jing</id>
-    <content type="html"><![CDATA[<p><video  preload='metadata' controls ><source src='http://v2.yicai.com/newvideo/video/201503/26/55141f68-15af-04e3-443c-b0c7c362/transcode_50736195-6c28-756d-ee5f-0d6013fc.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></video></p>
-
-<p>ps：貌似没看到我</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[She and Me]]></title>
-    <link href="http://axecode.ga/she-and-me/"/>
-    <updated>2015-03-26T22:46:13+08:00</updated>
-    <id>http://axecode.ga/she-and-me</id>
-    <content type="html"><![CDATA[<p><img class="lazy" data-original="/photos/520-she.jpg" width="640" height="200" title="'yuez blog - she'" alt="'yuez blog - she'">
-<img class="lazy" data-original="/photos/520-me.jpg" width="640" height="200" title="'yuez blog - me'" alt="'yuez blog - me'"></p>
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[HTTP Cache]]></title>
     <link href="http://axecode.ga/http-cache/"/>
     <updated>2015-03-17T21:01:48+08:00</updated>
@@ -4155,113 +3897,6 @@ only a block(they do not take a string).</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[君子固有穷乎?]]></title>
-    <link href="http://axecode.ga/jun-zi-gu-you-qiong-hu/"/>
-    <updated>2014-07-27T08:56:43+08:00</updated>
-    <id>http://axecode.ga/jun-zi-gu-you-qiong-hu</id>
-    <content type="html"><![CDATA[<blockquote><p>匪兕匪虎 率彼旷野</p></blockquote>
-
-<p>“那人在外面不就成了野人吗？”耳边是江河文青特有的幽默，让我想起先贤孔子的
-感慨：“吾等既非野牛，也非猛虎，何以不得不彷徨原野？”</p>
-
-<p>孔子，子路，颜回，子贡师徒一行，坐道陈都三载。不料吴楚二国，以陈地为战场，
-一决雌雄。虽非所愿，可是陈都必然将无逃避之途，是故，孔子一行即日离开陈都，
-前往楚地。</p>
-
-<p>孰料，一行人于野地宿营时，遭吴残兵败部所袭，夺取马车及车上所载粮食。此番
-逃离陈都之行，已有无法描述的险阻艰辛。如此饿着肚腹，蹒跚前进。路途间或分
-得一些陈兵粮食，然而也是所得有限，一经平分，根本无济于事。到了不知第八天
-还是第九天，不折不扣成为了游魂的一行人，挣扎到了某个村落，再也动弹不得。</p>
-
-<p>此时，子路突然趟步走到夫子跟前，掷出一句：</p>
-
-<p>“君子亦有穷乎？”</p>
-
-<p>看似子路真的生气了，如若就此饿死，那么过往所做何为？</p>
-
-<p>“君子亦有穷乎？”子路复问一句。</p>
-
-<p>夫子转向子路，言道：“君子固穷，小人穷斯滥矣。”声音强而有力。</p>
-
-<blockquote><p>君子固穷 小人穷斯滥矣</p></blockquote>
-
-<p>小人一旦陷入窘境，就会动摇心智，无法约束自己。君子却是再如何窘迫，也不至于
-动摇心智。</p>
-
-<p>这一番经历与马浩汉、江河、胡说一行人的平凡之路，再相似不过了。</p>
-
-<p>马浩汉振兴东极村旅游业失败之后，为送江河到西极某地执教，一行三人，收拾行囊，
-驱车离开家乡。三人决定，先是看望青梅竹马的周沫，继而寻找与马浩汉书信互往
-十多年的笔友刘莺莺，最后再前往西极。第一个令我心有感触之地，便是周沫送别马浩汉
-一幕。</p>
-
-<p>周沫是一名替身演员，遵着“小城市的人都是凭借着关系，大城市里或多或少更公平一些”
-的信念，在演员一行中摸爬滚打。见到周沫，几番寒暄，终是送别之际来临。如若没有
-记错的话，应是长桥送别。道别之后，周沫行到片场，这次她饰演的是被日本兵枪决
-的知情少女，“轰”得一声枪响，这是对马浩汉行程至此的终结，也是对借来下行程
-艰难的伏笔。而这意味深藏的一幕——因为送别之后,他们将面临的是</p>
-
-<blockquote><p>波涛汹涌，充满荒谬与悖论的成人世界。</p></blockquote>
-
-<p>——却被故意设定为马浩汉以为听到的枪声是车胎
-破裂，从而下车没头没脑检查，随即演员中一片笑声。这一定又是文青式的幽默——
-刻意设计笑点，将哲理隐藏在幽默中——或许是为了避免“太矫情”。文绉绉的台词
-不如藏起来好了。</p>
-
-<p>于此之后，直到阿吕登场，剧情有些起色。而在周沫后，阿吕前所经历两件事，
-一是“真老师嫖娼不成反被追，假妓女斗智斗勇为讹钱。”，二是马浩汉初见刘
-莺莺，俱是故事平常，人物平庸，刘莺莺一句心灵鸡汤：“喜欢就会放肆，爱就
-是克制”，更是将我雷到不行。所幸，阿吕是一位性格丰满的骗子。</p>
-
-<p>马浩汉和江河是在迷路后偶遇阿吕的。你问胡说？胡说在开场五分钟后便已宣告
-该角色杀青。阿吕原本在一座小镇上经营一家摩托车修理店，为了不被昔日同窗
-小觑，也为了吸引女神注意，他做出小镇上从来没有过的壮举——摩托车骑行中国。
-他成功了，虽然没能得到同窗的尊重，却是赢得了女神的爱情，正如阿吕自己所说：“
-有时，你想证明给一万个人看，最终只得到了一个人的关注，这就够了。”好景不长，
-不去经年，便在一场雨夜骑行中，与妻子阴阳两隔。此后每年，阿吕都会重走与
-妻子的路，以此祭奠。碰到马浩汉两人时，已是第六个年头。</p>
-
-<p>至此，故事与孔子一行的经历更相似了。</p>
-
-<p>阿吕随即与二人同行。</p>
-
-<p>一路之上，阿吕时而追忆陈年往事，时而豪迈放声歌唱；在谈及妻子时是那么真诚，
-在宿营地，激励二人真是鼓舞人心。然而，孰真孰假？阿吕就是村上春树笔下的成
-人世界吧，充满荒谬与悖论的成人世界。</p>
-
-<blockquote><p>我并不怕被欺骗，我怕的是我刚刚信任一个人，就被欺骗。</p></blockquote>
-
-<p>诚如马浩汉所言，辅一得到信任，阿吕便拉勾收网，将这一份情谊以车价贱卖。
-或许，本就没有什么情谊，或许，阿吕便是孔子口中的小人，或许，不是在这
-种环境下他们真的能拥有情谊。</p>
-
-<blockquote><p>狗的寿命只有十四年，但是比情谊长。</p></blockquote>
-
-<p>所幸，马浩汉二人并没有到山穷水尽的地步，阿吕在开走车时，尚且将他们的
-行李留下，还有那条代表情谊的阿拉斯加犬。这时的二人，应是到了比绝境也
-好不了多少的地步。令人起敬的是，马浩汉口中仍是念念不忘事业，江河更是
-从始至终都没有过动摇。正如他们二人的名字，浩汉江河，奔流到海不复回。
-二人收拾行李，复又上路，这次他们用步行走完这最后的平凡之路。最终，二
-人在西极之地的山坡前分别。</p>
-
-<p>故事就此结束，无论如何，我认为故事就此结束。</p>
-
-<h3>三分未满</h3>
-
-<p>洋洋洒洒许多字，看的人头晕脑胀，还是直接给一个评分吧，清晰明了。</p>
-
-<p>若以十分满计，至西极前我给四分，结尾给一分，平均一下，二点五分，我姑
-且算是韩寒半个读者，再加零点五分，最后我给出的得分是三分。缘何会如此
-之低？</p>
-
-<p>一段并不精彩的故事，一位并不高明的讲故事人，中间穿杂着一些并不符合人
-物身份的心灵鸡汤， 配上突兀生硬的结局，三分可能已经很多了。</p>
-
-<blockquote><p>不想写了，先到这里吧。</p></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[搜索引擎优化要点]]></title>
     <link href="http://axecode.ga/sou-suo-yin-qing-you-hua-yao-dian/"/>
     <updated>2014-07-27T08:50:09+08:00</updated>
@@ -4421,64 +4056,6 @@ Walkthrough</a>.</p></li>
 吗？</p></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[海边的卡夫卡和叫乌鸦的少年]]></title>
-    <link href="http://axecode.ga/hai-bian-de-qia-fu-qia-he-jiao-wu-ya-de-shao-nian/"/>
-    <updated>2014-06-22T09:02:39+08:00</updated>
-    <id>http://axecode.ga/hai-bian-de-qia-fu-qia-he-jiao-wu-ya-de-shao-nian</id>
-    <content type="html"><![CDATA[<p>约莫二月，于书店之中偶遇《海边的卡夫卡》，作为我喜爱的作者的得意之作，自是不由分说，
-当即拿下。说来惭愧，购书至今四月有余，每日只拾缀两节，至多不过倍数，仍是尚有十之一二
-并未阅读。虽然如此，心中之十之八九已是按捺不住，一起倾露。</p>
-
-<blockquote><p>《海边的卡夫卡》这部长篇小说出来的的基本构思浮现出来的时候，我的脑袋里的念头最先是
-写一个十五岁的少年为主人公的故事。至于如何发展则全然心中无数。——村上春树</p></blockquote>
-
-<p>诚然如之所述，全书故事发展天马行空，甚至荒诞离奇，却又因作者文笔老练，使情节生动自然，
-时常精妙的哲学思辨，犹如羚羊挂角，妙不可言。然而白玉微瑕，以我来看，不足之处至少有二：
-其一，情节铺垫冗长，兼之使用两条叙事线索，半本之前，线索之间也并无关联，难免让人不知
-所云，所幸半本之后，峰回路转，精彩纷呈；其二，所述许多思想不该是一位十五岁少年应有的
-，是具有高度哲学境界不惑之士的所思所想。作者似是意识到这个问题，于是安排一位名叫乌鸦
-（卡夫卡在捷克语中意为乌鸦）的少年栖息少年体内，作为一种隐喻的存在，每每悄然出现。</p>
-
-<p>故事的开始也是源于叫乌鸦的少年。</p>
-
-<p>“毕竟什么都没开始，不好尽说泄气话。不管怎么说是你自己的人生，基本上只能按照你自己的
-想法来做。”</p>
-
-<p>听到来自叫乌鸦的少年的肯定，田村卡夫卡君——幼年被母亲抛弃，又被父亲诅咒——决定离家出走
-成为最坚强的少年。</p>
-
-<blockquote><p>他不知道，他将面对的是波涛汹涌，充满荒谬与悖论的成人世界。</p></blockquote>
-
-<p>这样的书评数不胜数，而且空洞乏力，用几个词语概括主角的经历，又以一段哲学性的话陈诉总
-结。初时我也有此意，旋即一想，如此一来何必费心费神写什么劳什子的书评，摘抄借鉴，省时
-省力。还是换个思路来吧。</p>
-
-<p>《海边的卡夫卡》主线故事固然精彩，更吸引我的却是几位配角人物的故事。年老不识字的中田
-和少不上进的星野，端庄智慧的佐伯与男心女身的上岛。他们四人组成了两队奇怪的组合，既对
-立又统一。同样只有一半影子的中田和佐伯，前者只知道现在，后者却活在回忆中。唯中田马首
-是瞻，愚钝的星野；爱慕佐伯，以佐伯为中心，聪慧的上岛。目不识丁，偏爱看书的中田；识字
-但从不看书的星野；彬彬有礼，和蔼热情，然而心却不在那里的佐伯；慎思自立，知识渊博，管
-理图书馆的中岛。还有着墨了了，隐喻为卡夫卡姐姐的樱花。他们五人，伴随着各自的悖谬与荒
-诞的经历——人与猫语，有鱼天降，灵魂出窍，入口之石……——有的来自现实之中，有的来自现实
-之外，愿意拯救而后从结果上拯救了十五岁少年的灵魂，让他从内心的冲动、不安、懦弱与绝望
-中挣脱。于是，我们领教了世界是何等的凶顽，同时又得知世界可以变得温存和美好。人的精神
-也在这种矛盾、离奇和复杂的过程中不断蜕变，伸张和成长。甚至需要一些心灵魔术才能跟随作
-者在这座心灵迷宫里的脚步。</p>
-
-<p>总的想来，被拯救的不只是十五岁的少年，每个人都在各自的角度得到了不同意义上的拯救。中
-田做回了普通的自己，佐伯得以打破回忆枷锁，星野找到了人生中正确的方向……每个人在帮助他
-人的同时，也在接受别人的帮助，最终是两个人的灵魂都得到了升华。这何尝不是作者想要传达
-的信息。帮助他人又因此帮助自己打破了桎梏，多么美好的社会啊！</p>
-
-<p>闲话多谈。应该从这个故事中学习什么？以我之论，理所当然是态度。何谓态度？</p>
-
-<p>首先，面对苛刻不公的生活要勇敢机智地抗争。勇敢和智慧好比斯巴达手中的长矛和坚盾，一个
-斗争，一个保护。第二，人是具有社会性的动物，很容易地迷失在群体意志中。保持独立思考，
-追求真理，是应当学习的。</p>
 ]]></content>
   </entry>
   
