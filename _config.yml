@@ -2,12 +2,12 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://yuez.me
-title: 乐正
-subtitle: Actions speak louder than words.
-author: 乐正
+url: http://axecode.ga
+title: Sven
+subtitle: Don't Worry, Be Happy.
+author: Axecode
 simple_search: https://www.google.com/search
-description: 乐正的博客，记录日常生活，技术心得等
+description: Sharing makes happiness
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
