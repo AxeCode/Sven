@@ -10,9 +10,12 @@
   <meta name="renderer" content="webkit">
 
   
-  <meta name="description" content="The machine could be used to create new programming that
-it could then execute. And that would be meta programming
-&ndash;writing code that writes &hellip;">
+  <meta name="description" content="成都金夫人香港服务器需要部署网站，记录整个服务器搭建的全部流程，涉及安全、用户、
+系统等综合性管理。 Task List 添加部署用户
+禁止root用户登录
+网站部署
+防火墙
+FTP功能 用户管理 建立deployment用户组，负责项目部署； &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -101,6 +104,244 @@ it could then execute. And that would be meta programming
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/cheng-du-jin-fu-ren-cong-ling-bu-shu-ji-lu/">成都金夫人从零部署记录</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-02T09:48:59+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>9:48 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>成都金夫人香港服务器需要部署网站，记录整个服务器搭建的全部流程，涉及安全、用户、
+系统等综合性管理。</p>
+
+<p><strong>Task List</strong></p>
+
+<ul>
+<li>添加部署用户</li>
+<li>禁止root用户登录</li>
+<li>网站部署</li>
+<li>防火墙</li>
+<li>FTP功能</li>
+</ul>
+
+
+<h2>用户管理</h2>
+
+<p>建立<code>deployment</code>用户组，负责项目部署；并且在<code>sudoers</code>文件中添加组<code>deployment</code>为管
+理员组。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>useradd deployment
+</span><span class='line'>
+</span><span class='line'><span class="c"># In /etc/sudoers</span>
+</span><span class='line'><span class="c"># Allows people in group deployment to run all commands</span>
+</span><span class='line'>%deployment <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> ALL
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>禁用<code>root</code>用户远程登录系统</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># In /etc/ssh/sshd_config</span>
+</span><span class='line'>PermitRootLogin no
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>服务器环境搭建</h2>
+
+<ul>
+<li><p>安装<code>lnmp</code>（Linux + Nginx + Mysql + PHP）</p>
+
+<blockquote><p>参考 <a href="http://lnmp.org">LNMP</a>,
+<a href="http://www.vpser.net/manage/lnmp-upgrade-php-script.html">PHP升级</a></p></blockquote></li>
+<li><p>安装<code>git</code></p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>yum install git
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>配置PHP</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="c1"># php.ini 添加或者修改配置</span>
+</span><span class='line'><span class="na">max_post_size</span> <span class="o">=</span> <span class="s">300M</span>
+</span><span class='line'><span class="na">file_upload_size</span> <span class="o">=</span> <span class="s">300M</span>
+</span><span class='line'><span class="na">extension</span> <span class="o">=</span> <span class="s">fileinfo.so</span>
+</span><span class='line'><span class="na">disable_functions</span> <span class="o">=</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>源码迁移与数据库迁移</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># 源码迁移</span>
+</span><span class='line'>zip -r project /path/to/project
+</span><span class='line'>unzip /path/to/source -d /path/to/destination
+</span><span class='line'>
+</span><span class='line'><span class="c"># 数据库迁移</span>
+</span><span class='line'>mysqldump -u username -p db_name &gt; db_name.sql
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>配置Nginx</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+</pre></td><td class='code'><pre><code class='nginx'><span class='line'><span class="c1"># default.conf</span>
+</span><span class='line'><span class="k">server</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kn">listen</span> <span class="mi">80</span> <span class="s">default</span><span class="p">;</span>
+</span><span class='line'>  <span class="kn">server_name</span> <span class="s">_</span><span class="p">;</span>
+</span><span class='line'>  <span class="kn">set</span> <span class="nv">$root_path</span> <span class="s">&#39;/bjdata/bj/golden_ladies/public&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="kn">root</span> <span class="nv">$root_path</span><span class="p">;</span>
+</span><span class='line'>  <span class="kn">index</span> <span class="s">index.php</span> <span class="s">index.html</span> <span class="s">index.htm</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="nv">$uri/</span> <span class="s">/index.php</span><span class="nv">$is_args$args</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Removes trailing slashes</span>
+</span><span class='line'>  <span class="kn">if</span> <span class="s">(!-d</span> <span class="nv">$request_filename</span><span class="s">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">rewrite</span> <span class="s">^/(.+)/</span>$ <span class="s">/</span><span class="nv">$1</span> <span class="s">permanent</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Rewrite to index.php unless the request is for an existing file</span>
+</span><span class='line'>  <span class="kn">(image,</span> <span class="s">js,</span>
+</span><span class='line'><span class="c1"># css, etc.)</span>
+</span><span class='line'>    <span class="s">if</span> <span class="s">(!-e</span> <span class="nv">$request_filename</span><span class="s">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="kn">rewrite</span> <span class="s">^/(.*)</span>$ <span class="s">/index.php?/</span><span class="nv">$1</span> <span class="s">last</span><span class="p">;</span>
+</span><span class='line'>      <span class="kn">break</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kn">error_page</span> <span class="mi">404</span>  <span class="s">/404.html</span><span class="p">;</span>
+</span><span class='line'>  <span class="kn">location</span> <span class="p">=</span> <span class="s">/404.html</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">root</span> <span class="s">/bjdata/error_pages/</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kn">error_page</span> <span class="mi">500</span> <span class="mi">502</span> <span class="mi">503</span> <span class="mi">504</span> <span class="s">/500.html</span><span class="p">;</span>
+</span><span class='line'>  <span class="kn">location</span> <span class="p">=</span> <span class="s">/500.html</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">root</span> <span class="s">/bjdata/error_pages/</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kn">location</span> <span class="p">~</span> <span class="sr">\.php$</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="s">/index.php</span> <span class="p">=</span><span class="mi">404</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">fastcgi_split_path_info</span> <span class="s">^(.+\.php)(/.+)</span>$<span class="p">;</span>
+</span><span class='line'><span class="c1"># fastcgi_pass unix:/var/run/php5-fpm.sock;</span>
+</span><span class='line'>    <span class="kn">fastcgi_pass</span> <span class="s">unix:/tmp/php-cgi.sock</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">fastcgi_index</span> <span class="s">index.php</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">fastcgi_param</span> <span class="s">SCRIPT_FILENAME</span> <span class="nv">$document_root$fastcgi_script_name</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">include</span> <span class="s">fastcgi_params</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># deny access to .htaccess files, if Apache&#39;s document root</span>
+</span><span class='line'><span class="c1"># concurs with nginx&#39;s one</span>
+</span><span class='line'>  <span class="kn">location</span> <span class="p">~</span> <span class="sr">/\.ht</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">deny</span> <span class="s">all</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kn">access_log</span> <span class="s">/var/log/nginx/www.cdjfr.com.log</span><span class="p">;</span>
+</span><span class='line'>  <span class="kn">error_log</span>  <span class="s">/var/log/nginx/www.cdjfr.com.error.log</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -650,189 +891,6 @@ only a block(they do not take a string).</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/sou-suo-yin-qing-you-hua-yao-dian/">搜索引擎优化要点</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-07-27T08:50:09+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:50 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><blockquote><p>本文翻译自<a href="http://www.clickminded.com/seo-checklist/">SEO CHECKLIST</a>。
-欢迎各位在<a href="https://github.com/zgs225/SEO-CHECKLIST.git">Github</a>上或者留言中指正错误。</p></blockquote>
-
-<p>每次开始新的网站工作时，为了搭建SEO基础，我发现我总是在一遍一遍做同样的事情。
-令人啼笑皆非的是，我最初写这个SEO要点只是为了我个人的SEO练习，现在却以“SEO
- Checklist”为关键字，每天获得数百的访问者。</p>
-
-<p>为了让新网站在搜索引擎中生存下来，这些要点覆盖了三十条你最需要考虑的事情。
-这些要点已经为2013年搜索引擎做了更新。我使用了一个简单的脚本去告诉你所有
-需要核对的要点。</p>
-
-<p>在你踏上SEO旅程之前，有一件事情我要重申：在页面优化中，最好的思路就是
-<strong>增量受益</strong>（原文是incrementally beneficial，不知道怎么翻译。）
-人们经常会范的一个大错误，当他们找到一个要点清单，他们就严格执行其中的
-每一条，他们认真地一行一行读每一个要点，还不时发出：“我的天！这条我没做！
-我的搜索排名工作全毁了。”我想，这不是你思考SEO的方式。</p>
-
-<p>如果你能做到下面每一条，那真正儿是极好了（雪姨状）！如果你做到了其中的大
-部分，你也非常棒。但是，通常情况下，如果你想让你的网站对SEO更加友好，你
-大可不必完全按照下面的要点来做。这就是说，做你认为最应该做的事情。</p>
-
-<h2>2014 SEO CHECKLIST</h2>
-
-<blockquote><p>勾选你已经完成的条目。请不要关闭本页面，否则你勾选的条目会重新变成未
-勾选状态。</p>
-
-<p>这些事项，不一定满足你的网站需求。</p></blockquote>
-
-<ul>
-<li><p><input type="checkbox"> 你有为你的网站创建一个google帐号和邮
-箱吗？这不是必须要做的，但是做这件事情很容易。</p></li>
-<li><p><input type="checkbox"> 你有在你的网站中集成
-<a href="http://www.google.com/analytics/">Google Analytics</a>
-吗？这个是<strong>必须</strong>要做的！</p></li>
-<li><p><input type="checkbox"> 你有在你的网站中安装
-<a href="http://www.google.com/webmasters/">Google Webmaster Tools</a>
-吗？这也是<strong>必做</strong>的。</p></li>
-<li><p><input type="checkbox"> 同样的，也请在你的网站中安装
-<a href="http://www.bing.com/toolbox/webmaster/">Bing Webmaster Tools</a>。</p></li>
-<li><p><input type="checkbox"> 使用了<code>WordPress</code>？那么请在你的网站安装
-<a href="http://yoast.com/wordpress/google-analytics/">Google Analytics for WordPress</a>
-和
-<a href="http://yoast.com/wordpress/seo/">SEO for WordPress</a>，
-这些会让你的工作轻松一百倍啊一百倍。</p></li>
-<li><p><input type="checkbox"> 你有检查过Google Webmaster Tools发送
-给你的，关于404、500错误，重复的内容，缺少标题或者其他技术型错误的消息吗？
-请仔细查看Google发送给你的每一条消息。</p></li>
-<li><p><input type="checkbox"> 你有使用<a href="http://www.browseo.net/">Browseo</a>
-去发现更多的技术错误吗？通常，对人们有害的错误还包括301，302重定向。</p></li>
-<li><p><input type="checkbox">
-你有使用<a href="http://home.snafu.de/tilman/xenulink.html">Xemu</a>
-去检查已经失效的链接吗？它是免费而且易用的工具。</p></li>
-<li><p><input type="checkbox"> 你有使用<a href="https://adwords.google.com/KeywordPlanner">Google Keyword Research
-Tool</a>
-吗？请认真思考搜索者会使用的关键字，为每个页面选择一个关键词。刚开始，
-你应该选择一些低容量(low-volume，不知如何翻译)词。</p></li>
-<li><p><input type="checkbox"> 你有看过竞争对手的链接概况吗？这是你构建
-链接时最有效的方式。这样，你可以知道他们在链接中使用了哪些文字，同时，
-你也知道了如何获取并且在哪里获取他们的链接。在
-<a href="http://www.linkdiagnosis.com">Link Diagnosis</a>,
-<a href="http://www.opensiteexplorer.org/">Open Site Explorer</a>,
-<a href="http://ahrefs.com/">Ahrefs</a>,
-<a href="http://www.majesticseo.com/">Majestic SEO</a>,
-<a href="http://links.lipperhey.com/">LipperHey</a>
-中输入竞争对手的域名。</p></li>
-<li><p><input type="checkbox"> 你有为你的每一个页面设置关键词吗？</p></li>
-<li><p><input type="checkbox"> 所有的页面标题少于65个字符吗？多余的
-字符会被搜索引擎截断。</p></li>
-<li><p><input type="checkbox"> 所有的<code>&lt;meta description&gt;</code>信息在
-155个字符以内吗？多余长度的字符会被搜索引擎截断。</p></li>
-<li><p><input type="checkbox"> 你使用了<code>h1</code>标签吗？你的关键词在这个
-标签里面吗？这个标签是否在所有<code>h2, h3...</code>之前？你是否只使用了
-<code>h1</code>标签？</p></li>
-<li><p><input type="checkbox"> 你的网站上是否有一个良好的，字数足够的
-搜索引擎访问文本？我建议这个文本至少100个词以上，因为你需要给搜索
-引擎一个机会去理解你的页面的主旨是什么。为了保证排名，请永远不要在你
-的网站中添加不重要的文本，但是我不建议你为这些不重要的文本创建一个新的
-页面，除非这个文本含有超过100个有价值的词语。</p></li>
-<li><p><input type="checkbox"> 你使用了同义词吗？记住：同义词非常好用。
-使用关键词的同义词是非常推荐的。</p></li>
-<li><p><input type="checkbox"> 你在你的<code>img</code>标签中添加了描述性的
-<code>alt</code>属性和文件名了吗？搜索引擎是通过读<code>alt</code>属性和文件名称去发现
-图片的。试着为你的图片做描述性命名，但是<strong>不要做的太过</strong>。</p></li>
-<li><p><input type="checkbox"> 你使用SEO优化的方式去链接你的页面了吗？
-你有使你的链接语义化吗？这样用户和搜索引擎都能明白你的页面是关于什么的。
-我<strong>不建议</strong>你把全局导航的链接也语义化，这样看起来像是过度优化。请只对
-内容页面链接做语义化。</p></li>
-<li><p><input type="checkbox"> 你有过放下页面优化，开始构造你的链接吗？
-这是SEO一个非常困难但是非常重要的方面。看这篇文章
-<a href="http://www.clickminded.com/link-building-101-handbook/">ClickMinded Link Building Strategy
-Guide</a>
-，开始构建你的链接。</p></li>
-<li><p><input type="checkbox"> 你能确认你的网站上没有任何重复的内容吗？
-利用301跳转，规范的标签或者Google站长工具去修复重复内容可能被重复
-索引，从而给你的网站带来的损失。</p></li>
-<li><p><input type="checkbox"> 你是在你的代码中的链接使用的绝对路径吗？
-一些CMS管理系统会提供这个选项，使用绝对路径去代替相对路径。</p></li>
-<li><p><input type="checkbox"> 你是否使用了
-<a href="https://developers.google.com/speed/pagespeed/">Google Page Speed Tools</a>
-为你的网站加速？</p></li>
-<li><p><input type="checkbox"> 你是否为你的网站创建了一个<code>SiteMap</code>
-xml文件，并且提交给了Google, Bing的站长工具？使用
-<a href="http://www.xml-sitemaps.com/">XML-Sitemaps.com</a>,
-<a href="http://wordpress.org/extend/plugins/google-sitemap-generator/"> Google XML Sitemaps WordPress
-Plugin</a>.</p></li>
-<li><p><input type="checkbox"> 你是否创建了一个<code>robot.txt</code>文件，
-并且将它提交给了Google, Bing的站长工具。</p></li>
-<li><p><input type="checkbox"> 你有申明你的网站在其他主要的网络上做
-知名度经营的理由吗？你不但想确认没有人知道你的账户名，而且如果你是
-一个新的网站或者公司，你可以经常的在你的搜索结果页面上加上你公司的
-品牌。如下所示(注：brand-name是公司的名称)：</p>
-
-<ul>
-<li><a href="http://www.twitter.com/brand-name">http://www.twitter.com/brand-name</a></li>
-<li><a href="http://www.facebook.com/brand-name">http://www.facebook.com/brand-name</a></li>
-<li><a href="http://www.yelp.com/biz/brand-name">http://www.yelp.com/biz/brand-name</a></li>
-<li><a href="http://www.youtube.com/user/brand-name">http://www.youtube.com/user/brand-name</a></li>
-<li><a href="http://www.linkedin.com/in/brand-name">http://www.linkedin.com/in/brand-name</a></li>
-<li><a href="http://brand-name.wordpress.com/">http://brand-name.wordpress.com/</a></li>
-<li><a href="http://brand-name.tumblr.com/">http://brand-name.tumblr.com/</a></li>
-<li><a href="http://pinterest.com/brand-name/">http://pinterest.com/brand-name/</a></li>
-<li><a href="http://www.hulu.com/profiles/brand-name">http://www.hulu.com/profiles/brand-name</a></li>
-<li><a href="http://technorati.com/people/brand-name">http://technorati.com/people/brand-name</a></li>
-<li><a href="http://about.me/brand-name">http://about.me/brand-name</a></li>
-<li><a href="http://brand-name.posterous.com/">http://brand-name.posterous.com/</a></li>
-<li><a href="http://profile.typepad.com/brand-name">http://profile.typepad.com/brand-name</a></li>
-<li><a href="http://www.squidoo.com/lensmasters/brand-name">http://www.squidoo.com/lensmasters/brand-name</a></li>
-<li><a href="http://www.stumbleupon.com/stumbler/brand-name">http://www.stumbleupon.com/stumbler/brand-name</a></li>
-<li><a href="http://www.etsy.com/people/brand-name">http://www.etsy.com/people/brand-name</a></li>
-<li><a href="http://en.gravatar.com/brand-name">http://en.gravatar.com/brand-name</a></li>
-<li><a href="http://www.scribd.com/brand-name">http://www.scribd.com/brand-name</a></li>
-<li><a href="http://brand-name.livejournal.com/">http://brand-name.livejournal.com/</a></li>
-<li><a href="http://brand-name.hubpages.com/">http://brand-name.hubpages.com/</a></li>
-<li><a href="http://www.flickr.com/photos/brand-name/">http://www.flickr.com/photos/brand-name/</a></li>
-<li><a href="http://photobucket.com/user/brand-name/profile/">http://photobucket.com/user/brand-name/profile/</a></li>
-</ul>
-</li>
-<li><p><input type="checkbox"> 你的网站对移动端友好吗？你是否使用
-<a href="http://www.browserstack.com/">BrowserStack</a>
-进行了多浏览器兼容测试？</p></li>
-<li><p><input type="checkbox"> 你有在Facebook, Twitter, LinkedIn,
-Google+等社交网络上为你的网站运维？</p></li>
-<li><p><input type="checkbox"> 你是否为你的网站打上作者标签？使用
-<a href="http://www.clickminded.com/get-on-google-plus-why-authorship-markup-now-matters/">Authorship Markup
-Walkthrough</a>.</p></li>
-<li><p><input type="checkbox"> 你有使用
-<a href="http://mysiteauditor.com/">My Site Auditor Report</a>
-再次检查你网站的一切吗？</p></li>
-<li><p><input type="checkbox"> 你有使用这些
-<a href="http://www.clickminded.com/free-seo-tools/">免费SEO工具</a>，
-在你完成审核之前，再次处理你的网站吗？如果你不懂一些高层次概念，你有
-复习<a href="http://www.clickminded.com/seo-101-handbook/">SEO新手指南</a>
-吗？</p></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/6">&larr; Older</a>
@@ -848,6 +906,10 @@ Walkthrough</a>.</p></li>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/vagrant-install-linux/">使用VirtualBox和Vagrant搭建Linux开发环境</a>
+      </li>
     
       <li class="post">
         <a href="/shen-me-shi-xian-cheng/">什么是线程</a>
@@ -885,16 +947,12 @@ Walkthrough</a>.</p></li>
         <a href="/tuan-dui-xiao-huo-ban-shang-di-yi-cai-jing/">团队小伙伴上第一财经</a>
       </li>
     
-      <li class="post">
-        <a href="/she-and-me/">She and Me</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
   <ul id="categories">
-    <li class='category'><a href='/blog/categories/ji-zhu/'>技术 (15)</a></li>
+    <li class='category'><a href='/blog/categories/ji-zhu/'>技术 (16)</a></li>
 <li class='category'><a href='/blog/categories/sheng-huo/'>生活 (4)</a></li>
 
   </ul>

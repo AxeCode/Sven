@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="zh-CN"><!--<![endif]-->
 <head>
   <meta charset="UTF-8">
-  <title>Category: 生活 - 乐正</title>
+  <title>使用VirtualBox和Vagrant搭建Linux开发环境 - 乐正</title>
   <meta name="author" content="乐正">
   <meta name="renderer" content="webkit">
 
   
-  <meta name="description" content="Category: 生活">
+  <meta name="description" content="1.下载并安装vagrant和virtualBox.(VB在前，vagrant在后，以防止vagrant检测不到VB)。 2.启动VirtualBox修改虚拟机默认保存路径，改为其他盘，以节省C盘空间。 3.在任意目录新建文件夹，假设为d:/vm，启动windows命令行，cd至该目录下： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +20,7 @@
 
   
 
-  <link rel="canonical" href="http://yuez.me/blog/categories/sheng-huo/">
+  <link rel="canonical" href="http://yuez.me/vagrant-install-linux/">
   <link rel="manifest" href="/manifest.json">
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
@@ -98,81 +98,130 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: 生活</h1>
+    
+      <h1 class="entry-title">使用VirtualBox和Vagrant搭建Linux开发环境</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-07-18T09:36:00+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:36 am</span></time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>1.下载并安装vagrant和virtualBox.(VB在前，vagrant在后，以防止vagrant检测不到VB)。</p>
 
-  
-  <h2>2015</h2>
+<p>2.启动VirtualBox修改虚拟机默认保存路径，改为其他盘，以节省C盘空间。</p>
 
-<article>
-  
-<h1><a href="/tuan-dui-xiao-huo-ban-shang-di-yi-cai-jing/">团队小伙伴上第一财经</a></h1>
-<time datetime="2015-03-27T11:43:57+08:00" pubdate><span class='month'>Mar</span> <span class='day'>27</span> <span class='year'>2015</span></time>
+<p>3.在任意目录新建文件夹，假设为<code>d:/vm</code>，启动windows命令行，cd至该目录下：此处以ubuntu/trusty64 box为例。更多系统可以搜索 <a href="https://vagrantcloud.com">https://vagrantcloud.com</a>。trusty64为ubuntu14.04 64位服务器版，比较纯净。命令行中输入    <code>vagrant init ubuntu/trusty64</code></p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/sheng-huo/'>生活</a></span>
-</footer>
+<p>4.按照提示输入<code>vagrant up</code>。该命令执行后vagrant会去自动下载指定的系统镜像，并且帮你在VirtualBox中建立一个新的虚拟机。命令执行成功虚拟机将会启动。</p>
 
+<p>5.<code>d:/vm</code>下Vagrantfile即为当前box的配置文件。编辑“Vagrantfile”文件，找到<code>config.vm.network "private_network", ip: "192.168.33.10"”</code>所在的行，将其前面的“#”号去掉。重新加载这个box，使得配置生效。输入命令： <code>vagrant reload</code>。执行完以上操作后我们就可以通过vagrant配置文件中使指定的ip地址来访问到该虚拟机了。</p>
 
-</article>
+<p>6.接着我们要通过ssh的方式来链接到我们刚刚建立好的虚拟机上。 输入命令：<code>vagrant ssh</code>。vagrant会提示连接地址端口用户名和密钥位置。这里推荐使用 xshell 这个ssh客户端,假设已经装好,运行xshell,新建会话，输入host和port确定。第一次登陆须输入用户名，此处为vagrant,接着用户验证，选择“Public Key”，然后点击浏览按钮选择“文件”，然后根据vagrant之前给你的信息找到key文件。点击确定后即可成功连接到你的虚拟机。</p>
 
-
-
-<article>
-  
-<h1><a href="/she-and-me/">She and Me</a></h1>
-<time datetime="2015-03-26T22:46:13+08:00" pubdate><span class='month'>Mar</span> <span class='day'>26</span> <span class='year'>2015</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/sheng-huo/'>生活</a></span>
-</footer>
-
-
-</article>
-
-
-
-  
-  <h2>2014</h2>
-
-<article>
-  
-<h1><a href="/jun-zi-gu-you-qiong-hu/">君子固有穷乎?</a></h1>
-<time datetime="2014-07-27T08:56:43+08:00" pubdate><span class='month'>Jul</span> <span class='day'>27</span> <span class='year'>2014</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/sheng-huo/'>生活</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/hai-bian-de-qia-fu-qia-he-jiao-wu-ya-de-shao-nian/">海边的卡夫卡和叫乌鸦的少年</a></h1>
-<time datetime="2014-06-22T09:02:39+08:00" pubdate><span class='month'>Jun</span> <span class='day'>22</span> <span class='year'>2014</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/sheng-huo/'>生活</a></span>
-</footer>
-
-
-</article>
-
+<p>7.请务必注意，给您的电脑关机之前，一定要用windows的命令行执行<code>vagrant halt</code>来关闭你的虚拟机，否则很有可能要重新装过。</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">乐正</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-07-18T09:36:00+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:36 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ji-zhu/'>技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+
+  
+    <div class="bdsharebuttonbox" data-tag="share_1">
+  <a class="fa fa-weibo"  data-cmd="tsina"></a>
+  <a class="fa fa-weixin" data-cmd="weixin"></a>
+  <a class="fa fa-copy"   data-cmd="copy"></a>
+</div>
+<script>
+  window._bd_share_config = {
+    common : {
+      bdText : document.title,
+      bdDesc : (function () {
+        var meta = document.querySelector("meta[name=\'description\']"),
+            description;
+
+        if (meta) meta = meta.getAttribute("content");
+        description = meta || "";
+
+        return description;
+      })(),
+      bdUrl  : document.location.href,
+      bdPic  : (function () {
+        var imgs = document.getElementsByTagName('img'),
+            img_srcs = [];
+
+        for (var i = 0; i < imgs.length; i++) {
+          var img = imgs[i];
+          // 因为使用了延迟加载，图片没有src属性
+          img_srcs.push(window.location.host + img.getAttribute('data-original'));
+        }
+
+        return img_srcs.join("||");
+      })()
+    },
+    share : [{
+      "bdSize" : 32,
+      "bdCustomStyle" : "/stylesheets/screen.css"
+    }],
+  }
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/shen-me-shi-xian-cheng/" title="Previous Post: 什么是线程">&laquo; 什么是线程</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -283,7 +332,10 @@
       var disqus_shortname = 'yuezme';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yuez.me/vagrant-install-linux/';
+        var disqus_url = 'http://yuez.me/vagrant-install-linux/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
