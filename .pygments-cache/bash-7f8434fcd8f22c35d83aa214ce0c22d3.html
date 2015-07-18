@@ -1,0 +1,13 @@
+<div class="highlight"><pre><span class="c"># 查看最新zsh信息</span>
+brew info zsh
+
+<span class="c"># 安装zsh</span>
+brew install --disable-etcdir zsh
+
+<span class="c"># 添加shell路径至/etc/shells文件中</span>
+<span class="c"># 将 /usr/local/bin/zsh 添加到下面文件中</span>
+sudo vim /etc/shells
+
+<span class="c"># 更换默认shell</span>
+chsh -s /usr/local/bin/zsh
+</pre></div>

@@ -1,0 +1,80 @@
+<div class="highlight"><pre><span class="c"># modify the prompt to contain git branch name if applicable</span>
+git_prompt_info<span class="o">()</span> <span class="o">{</span>
+  <span class="nv">ref</span><span class="o">=</span><span class="k">$(</span>git symbolic-ref HEAD 2&gt; /dev/null<span class="k">)</span>
+  <span class="k">if</span> <span class="o">[[</span> -n <span class="nv">$ref</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot; %{$fg_bold[green]%}${ref#refs/heads/}%{$reset_color%}&quot;</span>
+  <span class="k">fi</span>
+<span class="o">}</span>
+setopt promptsubst
+<span class="nb">export </span><span class="nv">PS1</span><span class="o">=</span><span class="s1">&#39;${SSH_CONNECTION+&quot;%{$fg_bold[green]%}%n@%m:&quot;}%{$fg_bold[blue]%}%c%{$reset_color%}$(git_prompt_info) %# &#39;</span>
+
+<span class="c"># load our own completion functions</span>
+<span class="nv">fpath</span><span class="o">=(</span>~/.zsh/completion <span class="nv">$fpath</span><span class="o">)</span>
+
+<span class="c"># completion</span>
+autoload -U compinit
+compinit
+
+<span class="c"># load custom executable functions</span>
+<span class="k">for</span> <span class="k">function</span> in ~/.zsh/functions/*<span class="p">;</span> <span class="k">do</span>
+  <span class="nb">source</span> <span class="nv">$function</span>
+<span class="k">done</span>
+
+<span class="c"># makes color constants available</span>
+autoload -U colors
+colors
+
+<span class="c"># enable colored output from ls, etc</span>
+<span class="nb">export </span><span class="nv">CLICOLOR</span><span class="o">=</span>1
+
+<span class="c"># history settings</span>
+setopt hist_ignore_all_dups inc_append_history
+<span class="nv">HISTFILE</span><span class="o">=</span>~/.zhistory
+<span class="nv">HISTSIZE</span><span class="o">=</span>4096
+<span class="nv">SAVEHIST</span><span class="o">=</span>4096
+
+<span class="c"># awesome cd movements from zshkit</span>
+setopt autocd autopushd pushdminus pushdsilent pushdtohome cdablevars
+<span class="nv">DIRSTACKSIZE</span><span class="o">=</span>5
+
+<span class="c"># Enable extended globbing</span>
+setopt extendedglob
+
+<span class="c"># Allow [ or ] whereever you want</span>
+unsetopt nomatch
+
+<span class="c"># vi mode</span>
+bindkey -v
+bindkey <span class="s2">&quot;^F&quot;</span> vi-cmd-mode
+bindkey jj vi-cmd-mode
+
+<span class="c"># handy keybindings</span>
+bindkey <span class="s2">&quot;^A&quot;</span> beginning-of-line
+bindkey <span class="s2">&quot;^E&quot;</span> end-of-line
+bindkey <span class="s2">&quot;^R&quot;</span> <span class="nb">history</span>-incremental-search-backward
+bindkey <span class="s2">&quot;^P&quot;</span> <span class="nb">history</span>-search-backward
+bindkey <span class="s2">&quot;^Y&quot;</span> accept-and-hold
+bindkey <span class="s2">&quot;^N&quot;</span> insert-last-word
+bindkey -s <span class="s2">&quot;^T&quot;</span> <span class="s2">&quot;^[Isudo ^[A&quot;</span> <span class="c"># &quot;t&quot; for &quot;toughguy&quot;</span>
+
+<span class="c"># use vim as the visual editor</span>
+<span class="nb">export </span><span class="nv">VISUAL</span><span class="o">=</span>vim
+<span class="nb">export </span><span class="nv">EDITOR</span><span class="o">=</span><span class="nv">$VISUAL</span>
+
+<span class="c"># load rbenv if available</span>
+<span class="k">if</span> which rbenv <span class="p">&amp;</span>&gt;/dev/null <span class="p">;</span> <span class="k">then</span>
+  <span class="nb">eval</span> <span class="s2">&quot;$(rbenv init - --no-rehash)&quot;</span>
+<span class="k">fi</span>
+
+<span class="c"># load thoughtbot/dotfiles scripts</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;$HOME/.bin:$PATH&quot;</span>
+
+<span class="c"># mkdir .git/safe in the root of repositories you trust</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;.git/safe/../../bin:$PATH&quot;</span>
+
+<span class="c"># aliases</span>
+<span class="o">[[</span> -f ~/.aliases <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">source</span> ~/.aliases
+
+<span class="c"># Local config</span>
+<span class="o">[[</span> -f ~/.zshrc.local <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">source</span> ~/.zshrc.local
+</pre></div>

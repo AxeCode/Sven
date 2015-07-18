@@ -1,0 +1,40 @@
+<div class="highlight"><pre><span class="k">module</span> <span class="nn">GeneralLogger</span>
+  <span class="k">module</span> <span class="nn">ClassMethods</span>
+    <span class="k">def</span> <span class="nf">attr_logger</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+      <span class="kp">attr_reader</span> <span class="nb">name</span>
+
+      <span class="n">define_method</span> <span class="s2">&quot;</span><span class="si">#{</span> <span class="nb">name</span> <span class="si">}</span><span class="s2">=&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">val</span><span class="o">|</span>
+        <span class="nb">puts</span> <span class="s2">&quot;Assigning </span><span class="si">#{</span> <span class="n">val</span><span class="o">.</span><span class="n">inspect</span> <span class="si">}</span><span class="s2"> to </span><span class="si">#{</span> <span class="nb">name</span> <span class="si">}</span><span class="s2">&quot;</span>
+        <span class="nb">instance_variable_set</span> <span class="s2">&quot;@</span><span class="si">#{</span> <span class="nb">name</span> <span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">val</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">module</span> <span class="nn">InstanceMethods</span>
+    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+      <span class="nb">puts</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-%d %H:%M:%S &quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">included</span><span class="p">(</span><span class="n">receiver</span><span class="p">)</span>
+    <span class="n">receiver</span><span class="o">.</span><span class="n">extend</span>         <span class="no">ClassMethods</span>
+    <span class="n">receiver</span><span class="o">.</span><span class="n">send</span> <span class="ss">:include</span><span class="p">,</span> <span class="no">InstanceMethods</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Example</span>
+  <span class="kp">include</span> <span class="no">GeneralLogger</span>
+
+  <span class="n">attr_logger</span> <span class="ss">:name</span>
+<span class="k">end</span>
+
+<span class="n">ex</span> <span class="o">=</span> <span class="no">Example</span><span class="o">.</span><span class="n">new</span>
+<span class="n">ex</span><span class="o">.</span><span class="n">log</span> <span class="s2">&quot;A new Example created.&quot;</span>
+<span class="c1"># =&gt; 2014-10-31 08:56:56 A new Example created.</span>
+
+<span class="n">ex</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Yuez&quot;</span>
+<span class="c1"># =&gt; Assigning &quot;Yuez&quot; to name</span>
+
+<span class="n">ex</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Lucky&quot;</span>
+<span class="c1"># =&gt; Assigning &quot;Lucky&quot; to name</span>
+</pre></div>

@@ -1,0 +1,6 @@
+<div class="highlight"><pre><span class="no">HSET</span> <span class="ss">user</span><span class="p">:</span><span class="mi">1000</span> <span class="n">visits</span> <span class="mi">10</span>
+<span class="no">HINCRBY</span> <span class="ss">user</span><span class="p">:</span><span class="mi">1000</span> <span class="n">visits</span> <span class="mi">1</span>  <span class="c1"># =&gt; 11</span>
+<span class="no">HINCRBY</span> <span class="ss">user</span><span class="p">:</span><span class="mi">1000</span> <span class="n">visits</span> <span class="mi">10</span> <span class="c1"># =&gt; 21</span>
+<span class="no">HDEL</span>    <span class="ss">user</span><span class="p">:</span><span class="mi">1000</span> <span class="n">visits</span>
+<span class="no">HINCRBY</span> <span class="ss">user</span><span class="p">:</span><span class="mi">1000</span> <span class="n">visits</span> <span class="mi">1</span>  <span class="c1"># =&gt; 1</span>
+</pre></div>

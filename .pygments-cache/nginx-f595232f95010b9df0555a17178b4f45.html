@@ -1,0 +1,55 @@
+<div class="highlight"><pre><span class="c1"># default.conf</span>
+<span class="k">server</span> <span class="p">{</span>
+  <span class="kn">listen</span> <span class="mi">80</span> <span class="s">default</span><span class="p">;</span>
+  <span class="kn">server_name</span> <span class="s">_</span><span class="p">;</span>
+  <span class="kn">set</span> <span class="nv">$root_path</span> <span class="s">&#39;/bjdata/bj/golden_ladies/public&#39;</span><span class="p">;</span>
+  <span class="kn">root</span> <span class="nv">$root_path</span><span class="p">;</span>
+  <span class="kn">index</span> <span class="s">index.php</span> <span class="s">index.html</span> <span class="s">index.htm</span><span class="p">;</span>
+
+  <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+    <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="nv">$uri/</span> <span class="s">/index.php</span><span class="nv">$is_args$args</span><span class="p">;</span>
+  <span class="p">}</span>
+
+<span class="c1"># Removes trailing slashes</span>
+  <span class="kn">if</span> <span class="s">(!-d</span> <span class="nv">$request_filename</span><span class="s">)</span> <span class="p">{</span>
+    <span class="kn">rewrite</span> <span class="s">^/(.+)/</span>$ <span class="s">/</span><span class="nv">$1</span> <span class="s">permanent</span><span class="p">;</span>
+  <span class="p">}</span>
+
+<span class="c1"># Rewrite to index.php unless the request is for an existing file</span>
+  <span class="kn">(image,</span> <span class="s">js,</span>
+<span class="c1"># css, etc.)</span>
+    <span class="s">if</span> <span class="s">(!-e</span> <span class="nv">$request_filename</span><span class="s">)</span> <span class="p">{</span>
+      <span class="kn">rewrite</span> <span class="s">^/(.*)</span>$ <span class="s">/index.php?/</span><span class="nv">$1</span> <span class="s">last</span><span class="p">;</span>
+      <span class="kn">break</span><span class="p">;</span>
+    <span class="p">}</span>
+
+  <span class="kn">error_page</span> <span class="mi">404</span>  <span class="s">/404.html</span><span class="p">;</span>
+  <span class="kn">location</span> <span class="p">=</span> <span class="s">/404.html</span> <span class="p">{</span>
+    <span class="kn">root</span> <span class="s">/bjdata/error_pages/</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kn">error_page</span> <span class="mi">500</span> <span class="mi">502</span> <span class="mi">503</span> <span class="mi">504</span> <span class="s">/500.html</span><span class="p">;</span>
+  <span class="kn">location</span> <span class="p">=</span> <span class="s">/500.html</span> <span class="p">{</span>
+    <span class="kn">root</span> <span class="s">/bjdata/error_pages/</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kn">location</span> <span class="p">~</span> <span class="sr">\.php$</span> <span class="p">{</span>
+    <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="s">/index.php</span> <span class="p">=</span><span class="mi">404</span><span class="p">;</span>
+    <span class="kn">fastcgi_split_path_info</span> <span class="s">^(.+\.php)(/.+)</span>$<span class="p">;</span>
+<span class="c1"># fastcgi_pass unix:/var/run/php5-fpm.sock;</span>
+    <span class="kn">fastcgi_pass</span> <span class="s">unix:/tmp/php-cgi.sock</span><span class="p">;</span>
+    <span class="kn">fastcgi_index</span> <span class="s">index.php</span><span class="p">;</span>
+    <span class="kn">fastcgi_param</span> <span class="s">SCRIPT_FILENAME</span> <span class="nv">$document_root$fastcgi_script_name</span><span class="p">;</span>
+    <span class="kn">include</span> <span class="s">fastcgi_params</span><span class="p">;</span>
+  <span class="p">}</span>
+
+<span class="c1"># deny access to .htaccess files, if Apache&#39;s document root</span>
+<span class="c1"># concurs with nginx&#39;s one</span>
+  <span class="kn">location</span> <span class="p">~</span> <span class="sr">/\.ht</span> <span class="p">{</span>
+    <span class="kn">deny</span> <span class="s">all</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kn">access_log</span> <span class="s">/var/log/nginx/www.cdjfr.com.log</span><span class="p">;</span>
+  <span class="kn">error_log</span>  <span class="s">/var/log/nginx/www.cdjfr.com.error.log</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>

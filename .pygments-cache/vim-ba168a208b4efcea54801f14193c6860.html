@@ -1,0 +1,18 @@
+<div class="highlight"><pre><span class="c">&quot; 将下面配置文件加入到.vimrc文件中</span>
+<span class="k">set</span> <span class="nb">nocompatible</span> <span class="c">&quot; 必须</span>
+<span class="k">filetype</span> off     <span class="c">&quot; 必须</span>
+
+<span class="c">&quot; 将Vundle加入运行时路径中(Runtime path)</span>
+<span class="k">set</span> <span class="nb">rtp</span><span class="p">+=~</span><span class="sr">/.vim/</span>bundle/Vundle.<span class="k">vim</span>
+<span class="k">call</span> vundle#begin<span class="p">()</span>
+
+<span class="c">&quot; 使用Vundle管理插件，必须</span>
+Plugin <span class="s1">&#39;gmarik/Vundle.vim&#39;</span>
+
+<span class="c">&quot;</span>
+<span class="c">&quot; 其他插件</span>
+<span class="c">&quot;</span>
+
+<span class="k">call</span> vundle#<span class="k">end</span><span class="p">()</span> <span class="c">&quot; 必须</span>
+<span class="k">filetype</span> plugin indent <span class="k">on</span> <span class="c">&quot; 必须</span>
+</pre></div>

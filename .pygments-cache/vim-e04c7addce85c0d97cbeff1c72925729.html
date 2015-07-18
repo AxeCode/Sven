@@ -1,0 +1,18 @@
+<div class="highlight"><pre><span class="c">&quot; Switch syntax highlighting on, when the terminal has colors</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">t_Co</span> <span class="p">&gt;</span> <span class="m">2</span> <span class="p">||</span> has<span class="p">(</span><span class="s2">&quot;gui_running&quot;</span><span class="p">))</span> &amp;&amp; <span class="p">!</span>exists<span class="p">(</span><span class="s2">&quot;syntax_on&quot;</span><span class="p">)</span>
+  <span class="nb">syntax</span> <span class="k">on</span>
+<span class="k">endif</span>
+
+<span class="c">&quot; Javascript syntax hightlight</span>
+<span class="nb">syntax</span> enable
+
+<span class="c">&quot; Set syntax highlighting for specific file types</span>
+<span class="k">autocmd</span> <span class="nb">BufRead</span><span class="p">,</span><span class="nb">BufNewFile</span> Appraisals <span class="k">set</span> <span class="k">filetype</span><span class="p">=</span><span class="k">ruby</span>
+<span class="k">autocmd</span> <span class="nb">BufRead</span><span class="p">,</span><span class="nb">BufNewFile</span> *.md <span class="k">set</span> <span class="k">filetype</span><span class="p">=</span>markdown
+<span class="k">autocmd</span> <span class="nb">Syntax</span> javascript <span class="k">set</span> <span class="nb">syntax</span><span class="p">=</span>jquery
+
+<span class="c">&quot; Color scheme</span>
+<span class="k">colorscheme</span> molokai
+<span class="nb">highlight</span> NonText guibg<span class="p">=</span><span class="mh">#060606</span>
+<span class="nb">highlight</span> Folded  guibg<span class="p">=</span>#<span class="m">0</span>A<span class="m">0</span>A<span class="m">0</span>A guifg<span class="p">=</span>#<span class="m">9090</span>D<span class="m">0</span>
+</pre></div>

@@ -1,0 +1,10 @@
+<div class="highlight"><pre><span class="c">&quot; configure syntastic syntax checking to check on open as well as save</span>
+<span class="k">let</span> <span class="k">g</span>:syntastic_check_on_open<span class="p">=</span><span class="m">1</span>
+<span class="k">let</span> <span class="k">g</span>:syntastic_html_tidy_ignore_errors<span class="p">=</span>[<span class="s2">&quot; proprietary attribute \&quot;ng-&quot;</span>]
+<span class="k">let</span> <span class="k">g</span>:syntastic_always_populate_loc_list <span class="p">=</span> <span class="m">1</span>
+<span class="k">let</span> <span class="k">g</span>:syntastic_auto_loc_list <span class="p">=</span> <span class="m">1</span>
+<span class="k">let</span> <span class="k">g</span>:syntastic_check_on_wq <span class="p">=</span> <span class="m">0</span>
+<span class="k">set</span> <span class="nb">statusline</span><span class="p">+=</span>%#warningmsg#
+<span class="k">set</span> <span class="nb">statusline</span><span class="p">+=</span>%{SyntasticStatuslineFlag<span class="p">()</span>}
+<span class="k">set</span> <span class="nb">statusline</span><span class="p">+=</span>%*
+</pre></div>

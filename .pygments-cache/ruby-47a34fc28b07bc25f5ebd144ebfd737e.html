@@ -1,0 +1,46 @@
+<div class="highlight"><pre><span class="c1"># 关于乐正</span>
+<span class="k">class</span> <span class="nc">Yuez</span>
+  <span class="kp">include</span> <span class="no">Lucky</span>
+
+  <span class="kp">attr_reader</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">:description</span><span class="p">,</span> <span class="ss">:contact</span>
+
+  <span class="k">def</span> <span class="nf">name</span>
+    <span class="s1">&#39;乐正 Yuez&#39;</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">title</span>
+    <span class="s1">&#39;Web开发者&#39;</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">description</span>
+    <span class="o">[</span>
+      <span class="s1">&#39;此人比较无趣，对娱乐活动无爱。&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;爱简洁的事物。&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;前后端开发样样都经手，样样都不精通。&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;珍惜时间，热爱生命。&#39;</span>
+    <span class="o">].</span><span class="n">join</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">contact</span>
+    <span class="p">{</span>
+        <span class="ss">email</span><span class="p">:</span> <span class="s1">&#39;zgs225@gmail.com&#39;</span><span class="p">,</span>
+       <span class="ss">github</span><span class="p">:</span> <span class="s1">&#39;https://github.com/zgs225&#39;</span><span class="p">,</span>
+           <span class="ss">ps</span><span class="p">:</span> <span class="s1">&#39;Talk is cheap, show me the code.&#39;</span>
+    <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">module</span> <span class="nn">Lucky</span>
+  <span class="k">module</span> <span class="nn">InstanceMethods</span>
+    <span class="kp">attr_reader</span> <span class="ss">:lover</span>
+
+    <span class="k">def</span> <span class="nf">lover</span>
+      <span class="s1">&#39;Lucky&#39;</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="nb">self</span><span class="o">.</span><span class="n">included</span><span class="p">(</span><span class="n">receiver</span><span class="p">)</span>
+    <span class="n">receiver</span><span class="o">.</span><span class="n">send</span> <span class="ss">:include</span><span class="p">,</span> <span class="no">InstanceMethods</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>

@@ -1,0 +1,10 @@
+<div class="highlight"><pre><span class="c">&quot; Cucumber navigation commands</span>
+<span class="k">autocmd</span> <span class="nb">User</span> Rails Rnavcommand step features<span class="sr">/step_definitions -glob=**/</span>* <span class="p">-</span>suffix<span class="p">=</span>_steps.rb
+<span class="k">autocmd</span> <span class="nb">User</span> Rails Rnavcommand config config <span class="p">-</span>glob<span class="p">=</span>**/* <span class="p">-</span>suffix<span class="p">=</span>.rb <span class="p">-</span>default<span class="p">=</span>routes
+
+<span class="c">&quot; RSpec.vim mappings</span>
+map <span class="p">&lt;</span>Leader<span class="p">&gt;</span><span class="k">t</span> :<span class="k">call</span> RunCurrentSpecFile<span class="p">()&lt;</span>CR<span class="p">&gt;</span>
+map <span class="p">&lt;</span>Leader<span class="p">&gt;</span><span class="k">s</span> :<span class="k">call</span> RunNearestSpec<span class="p">()&lt;</span>CR<span class="p">&gt;</span>
+map <span class="p">&lt;</span>Leader<span class="p">&gt;</span><span class="k">l</span> :<span class="k">call</span> RunLastSpec<span class="p">()&lt;</span>CR<span class="p">&gt;</span>
+map <span class="p">&lt;</span>Leader<span class="p">&gt;</span><span class="k">a</span> :<span class="k">call</span> RunAllSpecs<span class="p">()&lt;</span>CR<span class="p">&gt;</span>
+</pre></div>
