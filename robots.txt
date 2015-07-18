@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://axecode.ga/sitemap.xml 
+Sitemap: http://yuez.me/sitemap.xml 

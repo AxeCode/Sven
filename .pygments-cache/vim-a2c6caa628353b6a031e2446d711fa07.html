@@ -1,9 +1,0 @@
-<div class="highlight"><pre><span class="k">if</span> executable<span class="p">(</span><span class="s1">&#39;ag&#39;</span><span class="p">)</span>
-<span class="c">  &quot; Use Ag over Grep</span>
-  <span class="k">set</span> <span class="nb">grepprg</span><span class="p">=</span>ag\ <span class="p">--</span>nogroup\ <span class="p">--</span>nocolor
-<span class="c">  &quot; Use ag in CtrlP for listing files.</span>
-  <span class="k">let</span> <span class="k">g</span>:ctrlp_user_command <span class="p">=</span> <span class="s1">&#39;ag %s -l --nocolor -g &quot;&quot;&#39;</span>
-<span class="c">  &quot; Ag is fast enough that CtrlP doesn&#39;t need to cache</span>
-  <span class="k">let</span> <span class="k">g</span>:ctrlp_use_caching <span class="p">=</span> <span class="m">0</span>
-<span class="k">endif</span>
-</pre></div>

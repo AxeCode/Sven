@@ -5,12 +5,16 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="zh-CN"><!--<![endif]-->
 <head>
   <meta charset="UTF-8">
-  <title>乐正</title>
+  <title>第一次与 Arduino 交互 - 乐正</title>
   <meta name="author" content="乐正">
   <meta name="renderer" content="webkit">
 
   
-  <meta name="description" content="1.下载并安装vagrant和virtualBox.(VB在前，vagrant在后，以防止vagrant检测不到VB)。 2.启动VirtualBox修改虚拟机默认保存路径，改为其他盘，以节省C盘空间。 3.在任意目录新建文件夹，假设为d:/vm，启动windows命令行，cd至该目录下： &hellip;">
+  <meta name="description" content="这是一个比较简单的实验，不过好歹也是让 Arduino 接受外界电子元件的输入值了。这是
+套互动交通灯的实验，Arduino 等待行人按下按钮，这样行车灯会变红，行人灯会变绿。 需要的电子元件 LED 灯（2红，2绿，1黄）
+100Ω 电阻
+10KΩ 高阻值电阻（用于下拉电阻）
+按钮（ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +24,7 @@
 
   
 
-  <link rel="canonical" href="http://yuez.me/">
+  <link rel="canonical" href="http://yuez.me/di-yi-ci-yu-arduino-jiao-hu/">
   <link rel="manifest" href="/manifest.json">
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
@@ -68,9 +72,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">Axecode</a></h1>
+  <h1><a href="/">乐正</a></h1>
   
-    <h2>Don't Worry, Be Happy.</h2>
+    <h2>Actions speak louder than words.</h2>
   
 </hgroup>
 
@@ -97,116 +101,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/vagrant-install-linux/">使用VirtualBox和Vagrant搭建Linux开发环境</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-07-18T09:36:00+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:36 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>1.下载并安装vagrant和virtualBox.(VB在前，vagrant在后，以防止vagrant检测不到VB)。</p>
-
-<p>2.启动VirtualBox修改虚拟机默认保存路径，改为其他盘，以节省C盘空间。</p>
-
-<p>3.在任意目录新建文件夹，假设为<code>d:/vm</code>，启动windows命令行，cd至该目录下：此处以ubuntu/trusty64 box为例。更多系统可以搜索 <a href="https://vagrantcloud.com">https://vagrantcloud.com</a>。trusty64为ubuntu14.04 64位服务器版，比较纯净。命令行中输入    <code>vagrant init ubuntu/trusty64</code></p>
-
-<p>4.按照提示输入<code>vagrant up</code>。该命令执行后vagrant会去自动下载指定的系统镜像，并且帮你在VirtualBox中建立一个新的虚拟机。命令执行成功虚拟机将会启动。</p>
-
-<p>5.<code>d:/vm</code>下Vagrantfile即为当前box的配置文件。编辑“Vagrantfile”文件，找到<code>config.vm.network "private_network", ip: "192.168.33.10"”</code>所在的行，将其前面的“#”号去掉。重新加载这个box，使得配置生效。输入命令： <code>vagrant reload</code>。执行完以上操作后我们就可以通过vagrant配置文件中使指定的ip地址来访问到该虚拟机了。</p>
-
-<p>6.接着我们要通过ssh的方式来链接到我们刚刚建立好的虚拟机上。 输入命令：<code>vagrant ssh</code>。vagrant会提示连接地址端口用户名和密钥位置。这里推荐使用 xshell 这个ssh客户端,假设已经装好,运行xshell,新建会话，输入host和port确定。第一次登陆须输入用户名，此处为vagrant,接着用户验证，选择“Public Key”，然后点击浏览按钮选择“文件”，然后根据vagrant之前给你的信息找到key文件。点击确定后即可成功连接到你的虚拟机。</p>
-
-<p>7.请务必注意，给您的电脑关机之前，一定要用windows的命令行执行<code>vagrant halt</code>来关闭你的虚拟机，否则很有可能要重新装过。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/shen-me-shi-xian-cheng/">什么是线程</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-06-01T21:44:33+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>9:44 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><blockquote><p>要成就一个复杂的系统，各部分必须分工明确，各司其职。 —— 《人工科学》</p></blockquote>
-
-<h2>线程和进程</h2>
-
-<p>在上篇文章中（<a href="/jin-cheng-miao-shu-he-kong-zhi/">进程描述和控制</a>），提出的进程概
-念包含两个特点：</p>
-
-<ul>
-<li><p><strong>资源所有权</strong>：一个进程拥有包括一个存放进程映像的虚拟地址空间。一个进程总是拥
-有对于资源的控制或所有权。操作系统提供对于资源访问的保护功能。</p></li>
-<li><p><strong>调度/执行</strong>：一个进程具有一个执行状态和一个被分配的优先级，它是一个可以被操
-作系统调度和分派的实体。</p></li>
-</ul>
-
-
-<p>分派的单位通常称为线程或轻量级进程；而拥有资源所有权的单位通常仍称为进程或者任务。</p>
-
-<h4>多线程</h4>
-
-<p><strong>多线程</strong>是指在操作系统单个进程内支持多个并发执行路径的能力。对应的每个进程只有
-一个线程在执行的称为<strong>单线程方法</strong>。</p>
-
-<p>在多线程环境中，进程被定义成资源分配的单位和一个被保护的单位。在一个进程中，可能
-有一个或者多个线程，每个线程有：</p>
-
-<ul>
-<li>线程执行状态（运行、就绪等）</li>
-<li>在未运行时保存的线程上下文。</li>
-<li>一个执行栈。</li>
-<li>用于每个线程局部变量的静态存储空间。</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/di-yi-ci-yu-arduino-jiao-hu/">第一次与 Arduino 交互</a></h1>
+      <h1 class="entry-title">第一次与 Arduino 交互</h1>
     
     
       <p class="meta">
@@ -222,7 +122,7 @@
   </header>
 
 
-  <div class="entry-content"><p>这是一个比较简单的实验，不过好歹也是让 Arduino 接受外界电子元件的输入值了。这是
+<div class="entry-content"><p>这是一个比较简单的实验，不过好歹也是让 Arduino 接受外界电子元件的输入值了。这是
 套互动交通灯的实验，Arduino 等待行人按下按钮，这样行车灯会变红，行人灯会变绿。</p>
 
 <h2>需要的电子元件</h2>
@@ -475,20 +375,101 @@
 
 <p>注意：模拟引脚不需要像数字引脚一样设置输入或输出模式。</p>
 </div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">乐正</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-05-31T21:01:21+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>9:01 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ji-zhu/'>技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
   
   
 
-
-    </article>
   
-  <div class="pagination">
-    
-      <a class="prev" href="/posts/2">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+    <div class="bdsharebuttonbox" data-tag="share_1">
+  <a class="fa fa-weibo"  data-cmd="tsina"></a>
+  <a class="fa fa-weixin" data-cmd="weixin"></a>
+  <a class="fa fa-copy"   data-cmd="copy"></a>
 </div>
+<script>
+  window._bd_share_config = {
+    common : {
+      bdText : document.title,
+      bdDesc : (function () {
+        var meta = document.querySelector("meta[name=\'description\']"),
+            description;
+
+        if (meta) meta = meta.getAttribute("content");
+        description = meta || "";
+
+        return description;
+      })(),
+      bdUrl  : document.location.href,
+      bdPic  : (function () {
+        var imgs = document.getElementsByTagName('img'),
+            img_srcs = [];
+
+        for (var i = 0; i < imgs.length; i++) {
+          var img = imgs[i];
+          // 因为使用了延迟加载，图片没有src属性
+          img_srcs.push(window.location.host + img.getAttribute('data-original'));
+        }
+
+        return img_srcs.join("||");
+      })()
+    },
+    share : [{
+      "bdSize" : 32,
+      "bdCustomStyle" : "/stylesheets/screen.css"
+    }],
+  }
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/arduino-xue-xi-bi-ji-led-shan-shuo-shi-yan-zhong-yin-han-de-jian-dan-yuan-li/" title="Previous Post: Arduino 学习笔记——LED 闪烁实验中隐含的简单原理">&laquo; Arduino 学习笔记——LED 闪烁实验中隐含的简单原理</a>
+      
+      
+        <a class="basic-alignment right" href="/shen-me-shi-xian-cheng/" title="Next Post: 什么是线程">什么是线程 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -579,6 +560,7 @@
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -595,7 +577,10 @@
       var disqus_shortname = 'yuezme';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yuez.me/di-yi-ci-yu-arduino-jiao-hu/';
+        var disqus_url = 'http://yuez.me/di-yi-ci-yu-arduino-jiao-hu/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

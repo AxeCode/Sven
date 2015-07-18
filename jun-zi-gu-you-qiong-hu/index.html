@@ -5,14 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="zh-CN"><!--<![endif]-->
 <head>
   <meta charset="UTF-8">
-  <title>Arduino 学习笔记——LED 闪烁实验中隐含的简单原理 - 乐正</title>
+  <title>君子固有穷乎? - 乐正</title>
   <meta name="author" content="乐正">
   <meta name="renderer" content="webkit">
 
   
-  <meta name="description" content="我是软件出身，但是许久以前便对硬件充满了兴趣，终于在最近买了一套 Arduino 基础开
-发套件，希望能在硬件上学习一些知识。 几乎所有单片机学习的第一个实验都是blink，在这个小小的实验中也蕴含着一些我不知
-道的电子电路知识，所以记录下在这个实验中所学习的知识，方便回顾整理。 代码回顾 &hellip;">
+  <meta name="description" content="匪兕匪虎 率彼旷野 “那人在外面不就成了野人吗？”耳边是江河文青特有的幽默，让我想起先贤孔子的
+感慨：“吾等既非野牛，也非猛虎，何以不得不彷徨原野？” 孔子，子路，颜回，子贡师徒一行，坐道陈都三载。不料吴楚二国，以陈地为战场，
+一决雌雄。虽非所愿，可是陈都必然将无逃避之途，是故， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -22,7 +22,7 @@
 
   
 
-  <link rel="canonical" href="http://yuez.me/arduino-xue-xi-bi-ji-led-shan-shuo-shi-yan-zhong-yin-han-de-jian-dan-yuan-li/">
+  <link rel="canonical" href="http://yuez.me/jun-zi-gu-you-qiong-hu/">
   <link rel="manifest" href="/manifest.json">
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
@@ -104,7 +104,7 @@
   
   <header>
     
-      <h1 class="entry-title">Arduino 学习笔记——LED 闪烁实验中隐含的简单原理</h1>
+      <h1 class="entry-title">君子固有穷乎?</h1>
     
     
       <p class="meta">
@@ -113,212 +113,112 @@
 
 
 
-<time class='entry-date' datetime='2015-05-27T08:52:24+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>8:52 am</span></time>
+<time class='entry-date' datetime='2014-07-27T08:56:43+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:56 am</span></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>我是软件出身，但是许久以前便对硬件充满了兴趣，终于在最近买了一套 Arduino 基础开
-发套件，希望能在硬件上学习一些知识。</p>
+<div class="entry-content"><blockquote><p>匪兕匪虎 率彼旷野</p></blockquote>
 
-<p>几乎所有单片机学习的第一个实验都是<code>blink</code>，在这个小小的实验中也蕴含着一些我不知
-道的电子电路知识，所以记录下在这个实验中所学习的知识，方便回顾整理。</p>
+<p>“那人在外面不就成了野人吗？”耳边是江河文青特有的幽默，让我想起先贤孔子的
+感慨：“吾等既非野牛，也非猛虎，何以不得不彷徨原野？”</p>
 
-<h2>代码回顾</h2>
+<p>孔子，子路，颜回，子贡师徒一行，坐道陈都三载。不料吴楚二国，以陈地为战场，
+一决雌雄。虽非所愿，可是陈都必然将无逃避之途，是故，孔子一行即日离开陈都，
+前往楚地。</p>
 
-<figure class='code'><figcaption><span>blink.ino</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="n">ledPin</span> <span class="o">=</span> <span class="mi">10</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="n">setup</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">pinMode</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="n">loop</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>孰料，一行人于野地宿营时，遭吴残兵败部所袭，夺取马车及车上所载粮食。此番
+逃离陈都之行，已有无法描述的险阻艰辛。如此饿着肚腹，蹒跚前进。路途间或分
+得一些陈兵粮食，然而也是所得有限，一经平分，根本无济于事。到了不知第八天
+还是第九天，不折不扣成为了游魂的一行人，挣扎到了某个村落，再也动弹不得。</p>
 
+<p>此时，子路突然趟步走到夫子跟前，掷出一句：</p>
 
-<p>这一段类似 C 的 Arduino 代码对于软件出身的我来说并不难理解。但是，这里要注意的是
-Arduino 程序必须包含 <code>setup()</code> 和 <code>loop()</code> 两个函数，否则它将不能工作。顾名思义，
-前者只在程序开始时运行一次，一般做初始化用，如设置引脚形式，设置波特率等等。后者
-则是在程序中循环执行的，是主要的过程函数。</p>
+<p>“君子亦有穷乎？”</p>
 
-<p>在这段代码的 <code>setup()</code> 函数中，只执行了一句代码：<code>pinMode(ledPin, OUTPUT)</code>，它告
-诉 Arduino 设置引脚的模式为输出模式。由此易知，对应的应该还有一个 <code>INPUT</code> 的输入
-模式。</p>
+<p>看似子路真的生气了，如若就此饿死，那么过往所做何为？</p>
 
-<p>在 <code>loop()</code> 函数中，让 LED 以一秒的频率闪烁，主要依靠 <code>digitalWrite</code> 和 <code>delay</code>
-函数。其中，<code>digitalWrite(ledPin, HIGH)</code> 告诉数字引脚打开电源，<code>delay(1000)</code>让程
-序暂停1秒，而 <code>digitalWrite(ledPin, LOW)</code> 则要求数字引脚关闭电源。</p>
+<p>“君子亦有穷乎？”子路复问一句。</p>
 
-<h2>硬件回顾</h2>
+<p>夫子转向子路，言道：“君子固穷，小人穷斯滥矣。”声音强而有力。</p>
 
-<p>在 LED 闪烁实验中，用到的硬件有：</p>
+<blockquote><p>君子固穷 小人穷斯滥矣</p></blockquote>
 
-<ul>
-<li>面包板</li>
-<li>5mm LED</li>
-<li>220Ω 电阻（或者其他适合你 LED 的数值）</li>
-<li>跳线（也称面包线）</li>
-</ul>
+<p>小人一旦陷入窘境，就会动摇心智，无法约束自己。君子却是再如何窘迫，也不至于
+动摇心智。</p>
 
+<p>这一番经历与马浩汉、江河、胡说一行人的平凡之路，再相似不过了。</p>
 
-<h4>面包板</h4>
+<p>马浩汉振兴东极村旅游业失败之后，为送江河到西极某地执教，一行三人，收拾行囊，
+驱车离开家乡。三人决定，先是看望青梅竹马的周沫，继而寻找与马浩汉书信互往
+十多年的笔友刘莺莺，最后再前往西极。第一个令我心有感触之地，便是周沫送别马浩汉
+一幕。</p>
 
-<p>面包板是一个可重复使用的非焊接单元，用于制作一个电子线路原型或者线路设计实验。这
-个板在一个栅格中有一系列的孔，在板子背面，这些孔通过两条导电金属条相连。 如图：</p>
+<p>周沫是一名替身演员，遵着“小城市的人都是凭借着关系，大城市里或多或少更公平一些”
+的信念，在演员一行中摸爬滚打。见到周沫，几番寒暄，终是送别之际来临。如若没有
+记错的话，应是长桥送别。道别之后，周沫行到片场，这次她饰演的是被日本兵枪决
+的知情少女，“轰”得一声枪响，这是对马浩汉行程至此的终结，也是对借来下行程
+艰难的伏笔。而这意味深藏的一幕——因为送别之后,他们将面临的是</p>
 
-<p><img class="lazy no-shadow" data-original="/photos/breadboard.jpg" width="640" height="200" title="面包板排列" alt="面包板排列"></p>
+<blockquote><p>波涛汹涌，充满荒谬与悖论的成人世界。</p></blockquote>
 
-<h4>电阻</h4>
+<p>——却被故意设定为马浩汉以为听到的枪声是车胎
+破裂，从而下车没头没脑检查，随即演员中一片笑声。这一定又是文青式的幽默——
+刻意设计笑点，将哲理隐藏在幽默中——或许是为了避免“太矫情”。文绉绉的台词
+不如藏起来好了。</p>
 
-<p>电阻会对电流产生一定的阻力，引起它两端的电压下降。在我的 LED 闪烁实验里面，数字
-引脚输出5V、40mA 直流电，而我的 LED 需要的是2V、35mA 电流，因此我需要一个电阻降
- 低电压和电流。</p>
+<p>于此之后，直到阿吕登场，剧情有些起色。而在周沫后，阿吕前所经历两件事，
+一是“真老师嫖娼不成反被追，假妓女斗智斗勇为讹钱。”，二是马浩汉初见刘
+莺莺，俱是故事平常，人物平庸，刘莺莺一句心灵鸡汤：“喜欢就会放肆，爱就
+是克制”，更是将我雷到不行。所幸，阿吕是一位性格丰满的骗子。</p>
 
-<p> 计算需要的电阻阻值的公式是：</p>
+<p>马浩汉和江河是在迷路后偶遇阿吕的。你问胡说？胡说在开场五分钟后便已宣告
+该角色杀青。阿吕原本在一座小镇上经营一家摩托车修理店，为了不被昔日同窗
+小觑，也为了吸引女神注意，他做出小镇上从来没有过的壮举——摩托车骑行中国。
+他成功了，虽然没能得到同窗的尊重，却是赢得了女神的爱情，正如阿吕自己所说：“
+有时，你想证明给一万个人看，最终只得到了一个人的关注，这就够了。”好景不长，
+不去经年，便在一场雨夜骑行中，与妻子阴阳两隔。此后每年，阿吕都会重走与
+妻子的路，以此祭奠。碰到马浩汉两人时，已是第六个年头。</p>
 
-<p>R = (V<sub>S</sub> - V<sub>L</sub>) / I</p>
+<p>至此，故事与孔子一行的经历更相似了。</p>
 
-<p>就是用电源电压减去 LED 电压除以 LED 电流。</p>
+<p>阿吕随即与二人同行。</p>
 
-<p>那么怎样找到所需要的阻值的电阻呢？电阻使用色环代码表示电阻阻值的大小。</p>
+<p>一路之上，阿吕时而追忆陈年往事，时而豪迈放声歌唱；在谈及妻子时是那么真诚，
+在宿营地，激励二人真是鼓舞人心。然而，孰真孰假？阿吕就是村上春树笔下的成
+人世界吧，充满荒谬与悖论的成人世界。</p>
 
-<table>
-<thead>
-<tr>
-<th>颜色 </th>
-<th> 1st </th>
-<th> 2nd </th>
-<th> 3rd(幂)         </th>
-<th> 4th(误差)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>黑色 </td>
-<td>  0  </td>
-<td>  0  </td>
-<td> x10<sup>0</sup> </td>
-<td></td>
-</tr>
-<tr>
-<td>棕色 </td>
-<td>  1  </td>
-<td>  1  </td>
-<td> x10<sup>1</sup> </td>
-<td> +/- 1%</td>
-</tr>
-<tr>
-<td>红色 </td>
-<td>  2  </td>
-<td>  2  </td>
-<td> x10<sup>2</sup> </td>
-<td> +/- 2%</td>
-</tr>
-<tr>
-<td>橘黄 </td>
-<td>  3  </td>
-<td>  3  </td>
-<td> x10<sup>3</sup> </td>
-<td></td>
-</tr>
-<tr>
-<td>黄色 </td>
-<td>  4  </td>
-<td>  4  </td>
-<td> x10<sup>4</sup> </td>
-<td></td>
-</tr>
-<tr>
-<td>绿色 </td>
-<td>  5  </td>
-<td>  5  </td>
-<td> x10<sup>5</sup> </td>
-<td> +/- 0.5%</td>
-</tr>
-<tr>
-<td>蓝色 </td>
-<td>  6  </td>
-<td>  6  </td>
-<td> x10<sup>6</sup> </td>
-<td> +/- 0.25%</td>
-</tr>
-<tr>
-<td>紫色 </td>
-<td>  7  </td>
-<td>  7  </td>
-<td> x10<sup>7</sup> </td>
-<td> +/- 0.1%</td>
-</tr>
-<tr>
-<td>灰色 </td>
-<td>  8  </td>
-<td>  8  </td>
-<td> x10<sup>8</sup> </td>
-<td> +/- 0.05%</td>
-</tr>
-<tr>
-<td>白色 </td>
-<td>  9  </td>
-<td>  9  </td>
-<td> x10<sup>9</sup> </td>
-<td></td>
-</tr>
-<tr>
-<td>金色 </td>
-<td>     </td>
-<td>     </td>
-<td> x10<sup>-1</sup></td>
-<td> +/- 5%</td>
-</tr>
-<tr>
-<td>银色 </td>
-<td>     </td>
-<td>     </td>
-<td> x10<sup>-2</sup></td>
-<td> +/- 10%</td>
-</tr>
-<tr>
-<td>无   </td>
-<td>     </td>
-<td>     </td>
-<td>                 </td>
-<td> +/- 20%</td>
-</tr>
-</tbody>
-</table>
+<blockquote><p>我并不怕被欺骗，我怕的是我刚刚信任一个人，就被欺骗。</p></blockquote>
 
+<p>诚如马浩汉所言，辅一得到信任，阿吕便拉勾收网，将这一份情谊以车价贱卖。
+或许，本就没有什么情谊，或许，阿吕便是孔子口中的小人，或许，不是在这
+种环境下他们真的能拥有情谊。</p>
 
-<h4>LED</h4>
+<blockquote><p>狗的寿命只有十四年，但是比情谊长。</p></blockquote>
 
-<p>LED 是一个标准的发光二极管。二极管是一种器件，值允许电流从一个方向流进。二极管用
-来防止在电路中意外地将电流和地连接以至于损坏其他元件。</p>
+<p>所幸，马浩汉二人并没有到山穷水尽的地步，阿吕在开走车时，尚且将他们的
+行李留下，还有那条代表情谊的阿拉斯加犬。这时的二人，应是到了比绝境也
+好不了多少的地步。令人起敬的是，马浩汉口中仍是念念不忘事业，江河更是
+从始至终都没有过动摇。正如他们二人的名字，浩汉江河，奔流到海不复回。
+二人收拾行李，复又上路，这次他们用步行走完这最后的平凡之路。最终，二
+人在西极之地的山坡前分别。</p>
 
-<p>LED 的引脚的长度不同，长的一边为正极，需要连接电源；短的一边为负极，需要接地。给
-LED 串联一个电阻是必要的，以确保提供给 LED 正确的电流。</p>
+<p>故事就此结束，无论如何，我认为故事就此结束。</p>
 
-<h2>总结</h2>
+<h3>三分未满</h3>
 
-<p>实验虽然简单，确也有许多我不曾知道的知识点。希望自己能坚持下去，完成对于 Arduino
-的学习。</p>
+<p>洋洋洒洒许多字，看的人头晕脑胀，还是直接给一个评分吧，清晰明了。</p>
+
+<p>若以十分满计，至西极前我给四分，结尾给一分，平均一下，二点五分，我姑
+且算是韩寒半个读者，再加零点五分，最后我给出的得分是三分。缘何会如此
+之低？</p>
+
+<p>一段并不精彩的故事，一位并不高明的讲故事人，中间穿杂着一些并不符合人
+物身份的心灵鸡汤， 配上突兀生硬的结局，三分可能已经很多了。</p>
+
+<blockquote><p>不想写了，先到这里吧。</p></blockquote>
 </div>
 
 
@@ -334,12 +234,12 @@ LED 串联一个电阻是必要的，以确保提供给 LED 正确的电流。</
 
 
 
-<time class='entry-date' datetime='2015-05-27T08:52:24+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>8:52 am</span></time>
+<time class='entry-date' datetime='2014-07-27T08:56:43+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:56 am</span></time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/ji-zhu/'>技术</a>
+    <a class='category' href='/blog/categories/sheng-huo/'>生活</a>
   
 </span>
 
@@ -398,10 +298,10 @@ LED 串联一个电阻是必要的，以确保提供给 LED 正确的电流。</
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/redis-ji-chu-jiao-cheng/" title="Previous Post: Redis 基础教程">&laquo; Redis 基础教程</a>
+        <a class="basic-alignment left" href="/sou-suo-yin-qing-you-hua-yao-dian/" title="Previous Post: 搜索引擎优化要点">&laquo; 搜索引擎优化要点</a>
       
       
-        <a class="basic-alignment right" href="/di-yi-ci-yu-arduino-jiao-hu/" title="Next Post: 第一次与 Arduino 交互">第一次与 Arduino 交互 &raquo;</a>
+        <a class="basic-alignment right" href="/the-meta-programming-in-ruby/" title="Next Post: The meta programming in Ruby">The meta programming in Ruby &raquo;</a>
       
     </p>
   </footer>
@@ -523,8 +423,8 @@ LED 串联一个电阻是必要的，以确保提供给 LED 正确的电流。</
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://yuez.me/arduino-xue-xi-bi-ji-led-shan-shuo-shi-yan-zhong-yin-han-de-jian-dan-yuan-li/';
-        var disqus_url = 'http://yuez.me/arduino-xue-xi-bi-ji-led-shan-shuo-shi-yan-zhong-yin-han-de-jian-dan-yuan-li/';
+        var disqus_identifier = 'http://yuez.me/jun-zi-gu-you-qiong-hu/';
+        var disqus_url = 'http://yuez.me/jun-zi-gu-you-qiong-hu/';
         var disqus_script = 'embed.js';
       
     (function () {
