@@ -1,49 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[乐正]]></title>
-  <link href="http://yuez.me/atom.xml" rel="self"/>
-  <link href="http://yuez.me/"/>
-  <updated>2015-07-18T09:40:22+08:00</updated>
-  <id>http://yuez.me/</id>
+  <title><![CDATA[Sven]]></title>
+  <link href="http://axecode.ga/atom.xml" rel="self"/>
+  <link href="http://axecode.ga/"/>
+  <updated>2015-07-18T11:50:36+08:00</updated>
+  <id>http://axecode.ga/</id>
   <author>
-    <name><![CDATA[乐正]]></name>
+    <name><![CDATA[Axecode]]></name>
     <email><![CDATA[zgs225@gmail.com]]></email>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
   
   <entry>
-    <title type="html"><![CDATA[使用VirtualBox和Vagrant搭建Linux开发环境]]></title>
-    <link href="http://yuez.me/vagrant-install-linux/"/>
-    <updated>2015-07-18T09:36:00+08:00</updated>
-    <id>http://yuez.me/vagrant-install-linux</id>
-    <content type="html"><![CDATA[<p>1.下载并安装vagrant和virtualBox.(VB在前，vagrant在后，以防止vagrant检测不到VB)。</p>
-
-<p>2.启动VirtualBox修改虚拟机默认保存路径，改为其他盘，以节省C盘空间。</p>
-
-<p>3.在任意目录新建文件夹，假设为<code>d:/vm</code>，启动windows命令行，cd至该目录下：此处以ubuntu/trusty64 box为例。更多系统可以搜索 <a href="https://vagrantcloud.com">https://vagrantcloud.com</a>。trusty64为ubuntu14.04 64位服务器版，比较纯净。命令行中输入    <code>vagrant init ubuntu/trusty64</code></p>
-
-<p>4.按照提示输入<code>vagrant up</code>。该命令执行后vagrant会去自动下载指定的系统镜像，并且帮你在VirtualBox中建立一个新的虚拟机。命令执行成功虚拟机将会启动。</p>
-
-<p>5.<code>d:/vm</code>下Vagrantfile即为当前box的配置文件。编辑“Vagrantfile”文件，找到<code>config.vm.network "private_network", ip: "192.168.33.10"”</code>所在的行，将其前面的“#”号去掉。重新加载这个box，使得配置生效。输入命令： <code>vagrant reload</code>。执行完以上操作后我们就可以通过vagrant配置文件中使指定的ip地址来访问到该虚拟机了。</p>
-
-<p>6.接着我们要通过ssh的方式来链接到我们刚刚建立好的虚拟机上。 输入命令：<code>vagrant ssh</code>。vagrant会提示连接地址端口用户名和密钥位置。这里推荐使用 xshell 这个ssh客户端,假设已经装好,运行xshell,新建会话，输入host和port确定。第一次登陆须输入用户名，此处为vagrant,接着用户验证，选择“Public Key”，然后点击浏览按钮选择“文件”，然后根据vagrant之前给你的信息找到key文件。点击确定后即可成功连接到你的虚拟机。</p>
-
-<p>7.请务必注意，给您的电脑关机之前，一定要用windows的命令行执行<code>vagrant halt</code>来关闭你的虚拟机，否则很有可能要重新装过。</p>
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[什么是线程]]></title>
-    <link href="http://yuez.me/shen-me-shi-xian-cheng/"/>
+    <link href="http://axecode.ga/shen-me-shi-xian-cheng/"/>
     <updated>2015-06-01T21:44:33+08:00</updated>
-    <id>http://yuez.me/shen-me-shi-xian-cheng</id>
+    <id>http://axecode.ga/shen-me-shi-xian-cheng</id>
     <content type="html"><![CDATA[<blockquote><p>要成就一个复杂的系统，各部分必须分工明确，各司其职。 —— 《人工科学》</p></blockquote>
 
 <h2>线程和进程</h2>
 
-<p>在上篇文章中（<a href="http://yuez.me/jin-cheng-miao-shu-he-kong-zhi/">进程描述和控制</a>），提出的进程概
+<p>在上篇文章中（<a href="http://axecode.ga/jin-cheng-miao-shu-he-kong-zhi/">进程描述和控制</a>），提出的进程概
 念包含两个特点：</p>
 
 <ul>
@@ -76,9 +55,9 @@
   
   <entry>
     <title type="html"><![CDATA[第一次与 Arduino 交互]]></title>
-    <link href="http://yuez.me/di-yi-ci-yu-arduino-jiao-hu/"/>
+    <link href="http://axecode.ga/di-yi-ci-yu-arduino-jiao-hu/"/>
     <updated>2015-05-31T21:01:21+08:00</updated>
-    <id>http://yuez.me/di-yi-ci-yu-arduino-jiao-hu</id>
+    <id>http://axecode.ga/di-yi-ci-yu-arduino-jiao-hu</id>
     <content type="html"><![CDATA[<p>这是一个比较简单的实验，不过好歹也是让 Arduino 接受外界电子元件的输入值了。这是
 套互动交通灯的实验，Arduino 等待行人按下按钮，这样行车灯会变红，行人灯会变绿。</p>
 
@@ -336,9 +315,9 @@
   
   <entry>
     <title type="html"><![CDATA[Arduino 学习笔记——LED 闪烁实验中隐含的简单原理]]></title>
-    <link href="http://yuez.me/arduino-xue-xi-bi-ji-led-shan-shuo-shi-yan-zhong-yin-han-de-jian-dan-yuan-li/"/>
+    <link href="http://axecode.ga/arduino-xue-xi-bi-ji-led-shan-shuo-shi-yan-zhong-yin-han-de-jian-dan-yuan-li/"/>
     <updated>2015-05-27T08:52:24+08:00</updated>
-    <id>http://yuez.me/arduino-xue-xi-bi-ji-led-shan-shuo-shi-yan-zhong-yin-han-de-jian-dan-yuan-li</id>
+    <id>http://axecode.ga/arduino-xue-xi-bi-ji-led-shan-shuo-shi-yan-zhong-yin-han-de-jian-dan-yuan-li</id>
     <content type="html"><![CDATA[<p>我是软件出身，但是许久以前便对硬件充满了兴趣，终于在最近买了一套 Arduino 基础开
 发套件，希望能在硬件上学习一些知识。</p>
 
@@ -543,9 +522,9 @@ LED 串联一个电阻是必要的，以确保提供给 LED 正确的电流。</
   
   <entry>
     <title type="html"><![CDATA[Redis 基础教程]]></title>
-    <link href="http://yuez.me/redis-ji-chu-jiao-cheng/"/>
+    <link href="http://axecode.ga/redis-ji-chu-jiao-cheng/"/>
     <updated>2015-05-26T10:46:25+08:00</updated>
-    <id>http://yuez.me/redis-ji-chu-jiao-cheng</id>
+    <id>http://axecode.ga/redis-ji-chu-jiao-cheng</id>
     <content type="html"><![CDATA[<h2>简介</h2>
 
 <p>Redis 是一个键值存储仓库，经常被称为 NoSQL 数据库。键值存储仓库的本质是有能力按
@@ -890,9 +869,9 @@ Redis 1.2 开始添加了可排序集合。可排序集合和标准的集合类�
   
   <entry>
     <title type="html"><![CDATA[将你的Vim 打造成轻巧强大的IDE]]></title>
-    <link href="http://yuez.me/jiang-ni-de-vim-da-zao-cheng-qing-qiao-qiang-da-de-ide/"/>
+    <link href="http://axecode.ga/jiang-ni-de-vim-da-zao-cheng-qing-qiao-qiang-da-de-ide/"/>
     <updated>2015-04-20T21:51:01+08:00</updated>
-    <id>http://yuez.me/jiang-ni-de-vim-da-zao-cheng-qing-qiao-qiang-da-de-ide</id>
+    <id>http://axecode.ga/jiang-ni-de-vim-da-zao-cheng-qing-qiao-qiang-da-de-ide</id>
     <content type="html"><![CDATA[<p>Vim和Emacs一个称为神之编辑器一个被称为编辑器之神，固然很是夸张，但也足以说明这两
 款软件的优秀和在程序员界的地位。但是它们都已漫长的学习曲线让人望而生畏，阻止了大
 多数人进入。作为一名几乎完全使用Vim写各种代码、文档的人，我想把我自己平时使用的
@@ -900,7 +879,7 @@ Redis 1.2 开始添加了可排序集合。可排序集合和标准的集合类�
 道如何入门的人来说，那就再荣幸不过了<i class="fa fa fa-heart"></i>。</p>
 
 <p>在下面的内容中，我会介绍我使用的插件、Vim的配置，最后如果你觉得这些配置手动太麻烦
-的话，我推荐你看我的另一篇文章（<a href="http://yuez.me/cong-ling-da-jian-he-pei-zhi-osxkai-fa-huan-jing/">从零搭建和配置OSX开发环境</a>），
+的话，我推荐你看我的另一篇文章（<a href="http://axecode.ga/cong-ling-da-jian-he-pei-zhi-osxkai-fa-huan-jing/">从零搭建和配置OSX开发环境</a>），
 在那篇文章的末尾，我给出了一个<strong>自动化配置和管理Vim的方法</strong>。</p>
 
 <p>先贴一张我的Vim的截图：</p>
@@ -1158,7 +1137,7 @@ Vim之所以如此倍受推崇，只是依靠这些还是远远不够的。接�
 
 <h4>现代化的插件管理</h4>
 
-<p>在我的另一篇文章中（<a href="http://yuez.me/cong-ling-da-jian-he-pei-zhi-osxkai-fa-huan-jing/">从零搭建和配置OSX开发环境</a>）
+<p>在我的另一篇文章中（<a href="http://axecode.ga/cong-ling-da-jian-he-pei-zhi-osxkai-fa-huan-jing/">从零搭建和配置OSX开发环境</a>）
 ，我已经详细介绍过<code>Vundle</code>这个管理Vim插件的一个软件，这里不做过多介绍。</p>
 
 <h4>在Vim中执行你想要运行的命令</h4>
@@ -1284,9 +1263,9 @@ Markdown文档的实时预览。</li>
   
   <entry>
     <title type="html"><![CDATA[进程描述和控制]]></title>
-    <link href="http://yuez.me/jin-cheng-miao-shu-he-kong-zhi/"/>
+    <link href="http://axecode.ga/jin-cheng-miao-shu-he-kong-zhi/"/>
     <updated>2015-04-16T15:16:59+08:00</updated>
-    <id>http://yuez.me/jin-cheng-miao-shu-he-kong-zhi</id>
+    <id>http://axecode.ga/jin-cheng-miao-shu-he-kong-zhi</id>
     <content type="html"><![CDATA[<blockquote><p>进程概念是现在操作系统的基本概念，已经成为计算机科学中的一大成就。</p></blockquote>
 
 <h2>什么是进程？</h2>
@@ -1603,9 +1582,9 @@ Markdown文档的实时预览。</li>
   
   <entry>
     <title type="html"><![CDATA[一名菜鸟IT项目经理的成长笔记]]></title>
-    <link href="http://yuez.me/yi-ming-cai-niao-itxiang-mu-jing-li-de-cheng-chang-bi-ji/"/>
+    <link href="http://axecode.ga/yi-ming-cai-niao-itxiang-mu-jing-li-de-cheng-chang-bi-ji/"/>
     <updated>2015-04-13T17:22:25+08:00</updated>
-    <id>http://yuez.me/yi-ming-cai-niao-itxiang-mu-jing-li-de-cheng-chang-bi-ji</id>
+    <id>http://axecode.ga/yi-ming-cai-niao-itxiang-mu-jing-li-de-cheng-chang-bi-ji</id>
     <content type="html"><![CDATA[<h2>是什么？</h2>
 
 <p><strong>Q: 项目经理是什么？</strong></p>
@@ -2033,9 +2012,9 @@ Markdown文档的实时预览。</li>
   
   <entry>
     <title type="html"><![CDATA[从零搭建和配置OSX开发环境]]></title>
-    <link href="http://yuez.me/cong-ling-da-jian-he-pei-zhi-osxkai-fa-huan-jing/"/>
+    <link href="http://axecode.ga/cong-ling-da-jian-he-pei-zhi-osxkai-fa-huan-jing/"/>
     <updated>2015-04-03T22:52:14+08:00</updated>
-    <id>http://yuez.me/cong-ling-da-jian-he-pei-zhi-osxkai-fa-huan-jing</id>
+    <id>http://axecode.ga/cong-ling-da-jian-he-pei-zhi-osxkai-fa-huan-jing</id>
     <content type="html"><![CDATA[<p>对于每一名开发者来说，更换系统或者更换电脑的时候，都免不了花上不短的时间去折腾开
 发环境的问题。我本人也是三番两次，深知这个过程的繁琐。所有，根据我自己以往的经验，
 以及参考一下他人的意见，整理一下关于在Mac下做各种开发的配置，包含Java, Ruby, Vim,
@@ -2168,7 +2147,7 @@ git, 数据库等等。欢迎补充与修正。</p>
 
 <p>下面贴上我的zsh配置以供参考</p>
 
-<figure class='code'><figcaption><span>我的zsh配置  (zshrc)</span> <a href='http://yuez.me/downloads/code/zshrc'>download</a></figcaption>
+<figure class='code'><figcaption><span>我的zsh配置  (zshrc)</span> <a href='http://axecode.ga/downloads/code/zshrc'>download</a></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -2403,7 +2382,7 @@ git, 数据库等等。欢迎补充与修正。</p>
 
 <p>下面列出我的Vim插件和配置</p>
 
-<figure class='code'><figcaption><span>Vim插件  (vimrc.bundles)</span> <a href='http://yuez.me/downloads/code/vimrc.bundles'>download</a></figcaption>
+<figure class='code'><figcaption><span>Vim插件  (vimrc.bundles)</span> <a href='http://axecode.ga/downloads/code/vimrc.bundles'>download</a></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -2507,7 +2486,7 @@ git, 数据库等等。欢迎补充与修正。</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<figure class='code'><figcaption><span>Vim配置  (vimrc)</span> <a href='http://yuez.me/downloads/code/vimrc'>download</a></figcaption>
+<figure class='code'><figcaption><span>Vim配置  (vimrc)</span> <a href='http://axecode.ga/downloads/code/vimrc'>download</a></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -2955,7 +2934,7 @@ Subversion等集中式版本控制软件不同，Git不需要服务器端软件�
 <p>为了使Git更好用，对Git做一些配置，<code>.gitconfig</code>文件中可以设置自定义命令等，<code>.gitignore</code>
 文件是默认被忽略版本管理的文件。</p>
 
-<figure class='code'><figcaption><span> (gitconfig)</span> <a href='http://yuez.me/downloads/code/gitconfig'>download</a></figcaption>
+<figure class='code'><figcaption><span> (gitconfig)</span> <a href='http://axecode.ga/downloads/code/gitconfig'>download</a></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -3029,7 +3008,7 @@ Subversion等集中式版本控制软件不同，Git不需要服务器端软件�
 </span></code></pre></td></tr></table></div></figure>
 
 
-<figure class='code'><figcaption><span> (gitignore)</span> <a href='http://yuez.me/downloads/code/gitignore'>download</a></figcaption>
+<figure class='code'><figcaption><span> (gitignore)</span> <a href='http://axecode.ga/downloads/code/gitignore'>download</a></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -3166,9 +3145,9 @@ Subversion等集中式版本控制软件不同，Git不需要服务器端软件�
   
   <entry>
     <title type="html"><![CDATA[团队小伙伴上第一财经]]></title>
-    <link href="http://yuez.me/tuan-dui-xiao-huo-ban-shang-di-yi-cai-jing/"/>
+    <link href="http://axecode.ga/tuan-dui-xiao-huo-ban-shang-di-yi-cai-jing/"/>
     <updated>2015-03-27T11:43:57+08:00</updated>
-    <id>http://yuez.me/tuan-dui-xiao-huo-ban-shang-di-yi-cai-jing</id>
+    <id>http://axecode.ga/tuan-dui-xiao-huo-ban-shang-di-yi-cai-jing</id>
     <content type="html"><![CDATA[<p><video  preload='metadata' controls ><source src='http://v2.yicai.com/newvideo/video/201503/26/55141f68-15af-04e3-443c-b0c7c362/transcode_50736195-6c28-756d-ee5f-0d6013fc.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></video></p>
 
 <p>ps：貌似没看到我</p>
@@ -3177,9 +3156,9 @@ Subversion等集中式版本控制软件不同，Git不需要服务器端软件�
   
   <entry>
     <title type="html"><![CDATA[She and Me]]></title>
-    <link href="http://yuez.me/she-and-me/"/>
+    <link href="http://axecode.ga/she-and-me/"/>
     <updated>2015-03-26T22:46:13+08:00</updated>
-    <id>http://yuez.me/she-and-me</id>
+    <id>http://axecode.ga/she-and-me</id>
     <content type="html"><![CDATA[<p><img class="lazy" data-original="/photos/520-she.jpg" width="640" height="200" title="'yuez blog - she'" alt="'yuez blog - she'">
 <img class="lazy" data-original="/photos/520-me.jpg" width="640" height="200" title="'yuez blog - me'" alt="'yuez blog - me'"></p>
 ]]></content>
@@ -3187,9 +3166,9 @@ Subversion等集中式版本控制软件不同，Git不需要服务器端软件�
   
   <entry>
     <title type="html"><![CDATA[HTTP Cache]]></title>
-    <link href="http://yuez.me/http-cache/"/>
+    <link href="http://axecode.ga/http-cache/"/>
     <updated>2015-03-17T21:01:48+08:00</updated>
-    <id>http://yuez.me/http-cache</id>
+    <id>http://axecode.ga/http-cache</id>
     <content type="html"><![CDATA[<p>使用缓存的优点：</p>
 
 <ul>
@@ -3558,9 +3537,9 @@ HTML文档分配HTTP首部信息，HTML2.0定义了<code>&lt;META HTTP-EQUIV&gt;
   
   <entry>
     <title type="html"><![CDATA[成都金夫人从零部署记录]]></title>
-    <link href="http://yuez.me/cheng-du-jin-fu-ren-cong-ling-bu-shu-ji-lu/"/>
+    <link href="http://axecode.ga/cheng-du-jin-fu-ren-cong-ling-bu-shu-ji-lu/"/>
     <updated>2014-12-02T09:48:59+08:00</updated>
-    <id>http://yuez.me/cheng-du-jin-fu-ren-cong-ling-bu-shu-ji-lu</id>
+    <id>http://axecode.ga/cheng-du-jin-fu-ren-cong-ling-bu-shu-ji-lu</id>
     <content type="html"><![CDATA[<p>成都金夫人香港服务器需要部署网站，记录整个服务器搭建的全部流程，涉及安全、用户、
 系统等综合性管理。</p>
 
@@ -3776,9 +3755,9 @@ HTML文档分配HTTP首部信息，HTML2.0定义了<code>&lt;META HTTP-EQUIV&gt;
   
   <entry>
     <title type="html"><![CDATA[The Meta Programming in Ruby]]></title>
-    <link href="http://yuez.me/the-meta-programming-in-ruby/"/>
+    <link href="http://axecode.ga/the-meta-programming-in-ruby/"/>
     <updated>2014-11-06T10:05:34+08:00</updated>
-    <id>http://yuez.me/the-meta-programming-in-ruby</id>
+    <id>http://axecode.ga/the-meta-programming-in-ruby</id>
     <content type="html"><![CDATA[<p>The machine could be used to create new programming that
 it could then execute. And that would be meta programming
 &ndash;writing code that writes code.</p>
@@ -4177,9 +4156,9 @@ only a block(they do not take a string).</p>
   
   <entry>
     <title type="html"><![CDATA[君子固有穷乎?]]></title>
-    <link href="http://yuez.me/jun-zi-gu-you-qiong-hu/"/>
+    <link href="http://axecode.ga/jun-zi-gu-you-qiong-hu/"/>
     <updated>2014-07-27T08:56:43+08:00</updated>
-    <id>http://yuez.me/jun-zi-gu-you-qiong-hu</id>
+    <id>http://axecode.ga/jun-zi-gu-you-qiong-hu</id>
     <content type="html"><![CDATA[<blockquote><p>匪兕匪虎 率彼旷野</p></blockquote>
 
 <p>“那人在外面不就成了野人吗？”耳边是江河文青特有的幽默，让我想起先贤孔子的
@@ -4284,9 +4263,9 @@ only a block(they do not take a string).</p>
   
   <entry>
     <title type="html"><![CDATA[搜索引擎优化要点]]></title>
-    <link href="http://yuez.me/sou-suo-yin-qing-you-hua-yao-dian/"/>
+    <link href="http://axecode.ga/sou-suo-yin-qing-you-hua-yao-dian/"/>
     <updated>2014-07-27T08:50:09+08:00</updated>
-    <id>http://yuez.me/sou-suo-yin-qing-you-hua-yao-dian</id>
+    <id>http://axecode.ga/sou-suo-yin-qing-you-hua-yao-dian</id>
     <content type="html"><![CDATA[<blockquote><p>本文翻译自<a href="http://www.clickminded.com/seo-checklist/">SEO CHECKLIST</a>。
 欢迎各位在<a href="https://github.com/zgs225/SEO-CHECKLIST.git">Github</a>上或者留言中指正错误。</p></blockquote>
 
@@ -4447,9 +4426,9 @@ Walkthrough</a>.</p></li>
   
   <entry>
     <title type="html"><![CDATA[海边的卡夫卡和叫乌鸦的少年]]></title>
-    <link href="http://yuez.me/hai-bian-de-qia-fu-qia-he-jiao-wu-ya-de-shao-nian/"/>
+    <link href="http://axecode.ga/hai-bian-de-qia-fu-qia-he-jiao-wu-ya-de-shao-nian/"/>
     <updated>2014-06-22T09:02:39+08:00</updated>
-    <id>http://yuez.me/hai-bian-de-qia-fu-qia-he-jiao-wu-ya-de-shao-nian</id>
+    <id>http://axecode.ga/hai-bian-de-qia-fu-qia-he-jiao-wu-ya-de-shao-nian</id>
     <content type="html"><![CDATA[<p>约莫二月，于书店之中偶遇《海边的卡夫卡》，作为我喜爱的作者的得意之作，自是不由分说，
 当即拿下。说来惭愧，购书至今四月有余，每日只拾缀两节，至多不过倍数，仍是尚有十之一二
 并未阅读。虽然如此，心中之十之八九已是按捺不住，一起倾露。</p>
@@ -4505,9 +4484,9 @@ Walkthrough</a>.</p></li>
   
   <entry>
     <title type="html"><![CDATA[重新认识Java，发现你的细节]]></title>
-    <link href="http://yuez.me/chong-xin-ren-shi-java,fa-xian-ni-de-xi-jie/"/>
+    <link href="http://axecode.ga/chong-xin-ren-shi-java,fa-xian-ni-de-xi-jie/"/>
     <updated>2014-01-25T09:08:34+08:00</updated>
-    <id>http://yuez.me/chong-xin-ren-shi-java,fa-xian-ni-de-xi-jie</id>
+    <id>http://axecode.ga/chong-xin-ren-shi-java,fa-xian-ni-de-xi-jie</id>
     <content type="html"><![CDATA[<h2>序言</h2>
 
 <p>“人和动物的本质区别是会制造和使用劳动工具”，这是初中历史课上的内容。<br/>
@@ -5138,9 +5117,9 @@ short, Short. 也可以
   
   <entry>
     <title type="html"><![CDATA[CAS 集成小战]]></title>
-    <link href="http://yuez.me/cas-ji-cheng-xiao-zhan/"/>
+    <link href="http://axecode.ga/cas-ji-cheng-xiao-zhan/"/>
     <updated>2013-12-06T11:32:25+08:00</updated>
-    <id>http://yuez.me/cas-ji-cheng-xiao-zhan</id>
+    <id>http://axecode.ga/cas-ji-cheng-xiao-zhan</id>
     <content type="html"><![CDATA[<blockquote><p>近来，项目中需要整合单点登录系统。按照项目要求，工程中原先的单点登录无法完成任务，需要重新加工。于
 是选用<a href="http://www.jasig.org/">JA-SIG</a>的<code>CAS</code>系统整合项目中。</p></blockquote>
 
@@ -5433,9 +5412,9 @@ Filter可以有多种，如果需要使用使用其他Filter可以参考用户�
   
   <entry>
     <title type="html"><![CDATA[HTTP 协议解析]]></title>
-    <link href="http://yuez.me/http-xie-yi-jie-xi/"/>
+    <link href="http://axecode.ga/http-xie-yi-jie-xi/"/>
     <updated>2013-11-21T11:15:21+08:00</updated>
-    <id>http://yuez.me/http-xie-yi-jie-xi</id>
+    <id>http://axecode.ga/http-xie-yi-jie-xi</id>
     <content type="html"><![CDATA[<p>从进入软件开发至今，也做了几个关于Web的应用。对于HTTP协议的理解不足让我吃到了不少的苦头，也曾在看到某一项解释之后一拍脑门：
 原来是这样的，原来还能那么做。就从经典的3W理论（What, How,
 Why）来深入一下HTTP，看看这个HTTP到底是个什么玩意。</p>

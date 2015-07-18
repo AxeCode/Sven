@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: 生活 | 乐正]]></title>
-  <link href="http://yuez.me/blog/categories/sheng-huo/atom.xml" rel="self"/>
-  <link href="http://yuez.me/"/>
-  <updated>2015-07-18T09:40:22+08:00</updated>
-  <id>http://yuez.me/</id>
+  <title><![CDATA[Category: 生活 | Sven]]></title>
+  <link href="http://axecode.ga/blog/categories/sheng-huo/atom.xml" rel="self"/>
+  <link href="http://axecode.ga/"/>
+  <updated>2015-07-18T11:50:36+08:00</updated>
+  <id>http://axecode.ga/</id>
   <author>
-    <name><![CDATA[乐正]]></name>
+    <name><![CDATA[Axecode]]></name>
     <email><![CDATA[zgs225@gmail.com]]></email>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[团队小伙伴上第一财经]]></title>
-    <link href="http://yuez.me/tuan-dui-xiao-huo-ban-shang-di-yi-cai-jing/"/>
+    <link href="http://axecode.ga/tuan-dui-xiao-huo-ban-shang-di-yi-cai-jing/"/>
     <updated>2015-03-27T11:43:57+08:00</updated>
-    <id>http://yuez.me/tuan-dui-xiao-huo-ban-shang-di-yi-cai-jing</id>
+    <id>http://axecode.ga/tuan-dui-xiao-huo-ban-shang-di-yi-cai-jing</id>
     <content type="html"><![CDATA[<p><video  preload='metadata' controls ><source src='http://v2.yicai.com/newvideo/video/201503/26/55141f68-15af-04e3-443c-b0c7c362/transcode_50736195-6c28-756d-ee5f-0d6013fc.mp4">http://v2.yicai.com/newvideo/video/201503/26/55141f68-15af-04e3-443c-b0c7c362/transcode_50736195-6c28-756d-ee5f-0d6013fc.mp4</a>&#8217; ></video></p>
 
 <p>ps：貌似没看到我</p>
@@ -26,9 +26,9 @@
   
   <entry>
     <title type="html"><![CDATA[She and Me]]></title>
-    <link href="http://yuez.me/she-and-me/"/>
+    <link href="http://axecode.ga/she-and-me/"/>
     <updated>2015-03-26T22:46:13+08:00</updated>
-    <id>http://yuez.me/she-and-me</id>
+    <id>http://axecode.ga/she-and-me</id>
     <content type="html"><![CDATA[<p><img class="lazy" data-original="/photos/520-she.jpg" width="640" height="200" title="&lsquo;yuez blog - she&rsquo;" alt="&lsquo;yuez blog - she&rsquo;">
 <img class="lazy" data-original="/photos/520-me.jpg" width="640" height="200" title="&lsquo;yuez blog - me&rsquo;" alt="&lsquo;yuez blog - me&rsquo;"></p>
 ]]></content>
@@ -36,9 +36,9 @@
   
   <entry>
     <title type="html"><![CDATA[君子固有穷乎?]]></title>
-    <link href="http://yuez.me/jun-zi-gu-you-qiong-hu/"/>
+    <link href="http://axecode.ga/jun-zi-gu-you-qiong-hu/"/>
     <updated>2014-07-27T08:56:43+08:00</updated>
-    <id>http://yuez.me/jun-zi-gu-you-qiong-hu</id>
+    <id>http://axecode.ga/jun-zi-gu-you-qiong-hu</id>
     <content type="html"><![CDATA[<blockquote><p>匪兕匪虎 率彼旷野</p></blockquote>
 
 <p>“那人在外面不就成了野人吗？”耳边是江河文青特有的幽默，让我想起先贤孔子的
@@ -143,9 +143,9 @@
   
   <entry>
     <title type="html"><![CDATA[海边的卡夫卡和叫乌鸦的少年]]></title>
-    <link href="http://yuez.me/hai-bian-de-qia-fu-qia-he-jiao-wu-ya-de-shao-nian/"/>
+    <link href="http://axecode.ga/hai-bian-de-qia-fu-qia-he-jiao-wu-ya-de-shao-nian/"/>
     <updated>2014-06-22T09:02:39+08:00</updated>
-    <id>http://yuez.me/hai-bian-de-qia-fu-qia-he-jiao-wu-ya-de-shao-nian</id>
+    <id>http://axecode.ga/hai-bian-de-qia-fu-qia-he-jiao-wu-ya-de-shao-nian</id>
     <content type="html"><![CDATA[<p>约莫二月，于书店之中偶遇《海边的卡夫卡》，作为我喜爱的作者的得意之作，自是不由分说，
 当即拿下。说来惭愧，购书至今四月有余，每日只拾缀两节，至多不过倍数，仍是尚有十之一二
 并未阅读。虽然如此，心中之十之八九已是按捺不住，一起倾露。</p>
